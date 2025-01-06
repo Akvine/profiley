@@ -7,6 +7,7 @@ import ru.akvine.profiley.repository.entity.RuleEntity;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface RuleRepository extends JpaRepository<RuleEntity, Long> {
@@ -24,4 +25,13 @@ public interface RuleRepository extends JpaRepository<RuleEntity, Long> {
             "re.deleted = false and re.domain.deleted = false and re.domain.user.deleted = false")
     List<RuleEntity> findBy(@Param("domainName") String domainName,
                             @Param("userUuid") String userUuid);
+
+    @Query("from RuleEntity re where " +
+            "re.deleted = false " +
+            "and " +
+            "re.uuid = :uuid " +
+            "and " +
+            "re.domain.user.uuid = :userUuid")
+    Optional<RuleEntity> findByUuid(@Param("uuid") String uuid,
+                                    @Param("userUuid") String userUuid);
 }

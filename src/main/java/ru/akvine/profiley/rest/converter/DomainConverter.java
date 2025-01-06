@@ -4,13 +4,11 @@ import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.akvine.profiley.components.SecurityManager;
-import ru.akvine.profiley.rest.dto.domain.CreateDomainRequest;
+import ru.akvine.profiley.rest.dto.domain.*;
 import ru.akvine.profiley.services.domain.Domain;
-import ru.akvine.profiley.rest.dto.domain.DomainDto;
-import ru.akvine.profiley.rest.dto.domain.ListDomainRequest;
-import ru.akvine.profiley.rest.dto.domain.ListDomainResponse;
 import ru.akvine.profiley.services.dto.domain.CreateDomain;
 import ru.akvine.profiley.services.dto.domain.ListDomains;
+import ru.akvine.profiley.services.dto.domain.UpdateDomain;
 
 import java.util.List;
 
@@ -35,6 +33,14 @@ public class DomainConverter {
         Preconditions.checkNotNull(request, "request is null");
         return new CreateDomain()
                 .setName(request.getName())
+                .setUserUuid(securityManager.getCurrentUser().getUuid());
+    }
+
+    public UpdateDomain convertToUpdateDomain(UpdateDomainRequest request) {
+        Preconditions.checkNotNull(request, "request is null");
+        return new UpdateDomain()
+                .setDomainName(request.getDomainName())
+                .setNewDomainName(request.getNewDomainName())
                 .setUserUuid(securityManager.getCurrentUser().getUuid());
     }
 

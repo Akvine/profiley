@@ -4,12 +4,11 @@ import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.akvine.profiley.components.SecurityManager;
-import ru.akvine.profiley.rest.dto.rule.CreateRuleRequest;
-import ru.akvine.profiley.rest.dto.rule.ListRuleResponse;
-import ru.akvine.profiley.rest.dto.rule.ListRules;
-import ru.akvine.profiley.rest.dto.rule.RuleDto;
+import ru.akvine.profiley.rest.dto.rule.*;
 import ru.akvine.profiley.services.domain.Rule;
 import ru.akvine.profiley.services.dto.rule.CreateRule;
+import ru.akvine.profiley.services.dto.rule.DeleteRule;
+import ru.akvine.profiley.services.dto.rule.UpdateRule;
 
 import java.util.Collection;
 
@@ -31,6 +30,23 @@ public class RuleConverter {
                 .setAlias(request.getAlias())
                 .setPattern(request.getPattern())
                 .setDomainName(request.getDomainName());
+    }
+
+    public UpdateRule convertToUpdateRule(UpdateRuleRequest request) {
+        Preconditions.checkNotNull(request, "updateRuleRequest is null");
+        return new UpdateRule()
+                .setAlias(request.getAlias())
+                .setUuid(request.getUuid())
+                .setPattern(request.getPattern())
+                .setUserUuid(securityManager.getCurrentUser().getUuid())
+                .setDomainName(request.getDomainName());
+    }
+
+    public DeleteRule convertToDeleteRule(String uuid) {
+        Preconditions.checkNotNull(uuid, "uuid is null");
+        return new DeleteRule()
+                .setUuid(uuid)
+                .setUserUuid(securityManager.getCurrentUser().getUuid());
     }
 
     public ListRuleResponse convertToListRuleResponse(Collection<Rule> rulesToConvert) {

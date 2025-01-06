@@ -1,20 +1,23 @@
 package ru.akvine.profiley.services.impl;
 
 import com.google.common.base.Preconditions;
+import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.akvine.profiley.exceptions.DomainAlreadyExistsException;
 import ru.akvine.profiley.exceptions.DomainNotFoundException;
+import ru.akvine.profiley.repository.DomainRepository;
 import ru.akvine.profiley.repository.entity.DomainEntity;
 import ru.akvine.profiley.repository.entity.UserEntity;
+import ru.akvine.profiley.services.DomainService;
 import ru.akvine.profiley.services.UserService;
 import ru.akvine.profiley.services.domain.Domain;
-import ru.akvine.profiley.repository.DomainRepository;
-import ru.akvine.profiley.services.DomainService;
 import ru.akvine.profiley.services.dto.domain.CreateDomain;
 import ru.akvine.profiley.services.dto.domain.ListDomains;
+import ru.akvine.profiley.services.dto.domain.UpdateDomain;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -69,6 +72,35 @@ public class DomainServiceImpl implements DomainService {
                     .setUuid(DEFAULT_UUID_STUB);
             return new Domain(domainRepository.save(domainToSave));
         }
+    }
+
+    @Override
+    public Domain update(UpdateDomain updateDomain) {
+        Preconditions.checkNotNull(updateDomain, "updateDomain is null");
+
+        String domainName = updateDomain.getDomainName();
+        String userUuid = updateDomain.getUserUuid();
+        String newDomain = updateDomain.getNewDomainName();
+        DomainEntity domainToUpdate = verifyExistsByNameAndUserUuid(domainName, userUuid);
+
+        if (StringUtils.isNotBlank(newDomain) && !domainToUpdate.getName().equals(newDomain)) {
+            domainToUpdate.setName(newDomain);
+            domainToUpdate.setUpdatedDate(new Date());
+        }
+
+        return new Domain(domainRepository.save(domainToUpdate));
+    }
+
+    @Override
+    public void delete(String domainName, String userUuid) {
+        Preconditions.checkNotNull(domainName, "domainName is null");
+        Preconditions.checkNotNull(userUuid, "userUuid is null");
+
+        DomainEntity domain = verifyExistsByNameAndUserUuid(domainName, userUuid);
+        domain.setDeleted(true);
+        domain.setDeletedDate(new Date());
+
+        domainRepository.save(domain);
     }
 
     @Override
