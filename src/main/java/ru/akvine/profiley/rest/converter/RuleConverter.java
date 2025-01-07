@@ -2,6 +2,7 @@ package ru.akvine.profiley.rest.converter;
 
 import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.akvine.profiley.components.SecurityManager;
 import ru.akvine.profiley.rest.dto.rule.*;
@@ -9,6 +10,7 @@ import ru.akvine.profiley.services.domain.Rule;
 import ru.akvine.profiley.services.dto.rule.CreateRule;
 import ru.akvine.profiley.services.dto.rule.DeleteRule;
 import ru.akvine.profiley.services.dto.rule.UpdateRule;
+import ru.akvine.profiley.utils.StringHelper;
 
 import java.util.Collection;
 
@@ -16,6 +18,11 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class RuleConverter {
     private final SecurityManager securityManager;
+
+    @Value("${system.rules.masking.enabled}")
+    private boolean systemRulesMaskingEnabled;
+    @Value("${system.rules.masking.symbol}")
+    private char systemRulesMaskingSymbol;
 
     public ListRules convertTolistRules(ListRuleRequest request) {
         Preconditions.checkNotNull(request, "listRuleRequest is null");
@@ -55,10 +62,22 @@ public class RuleConverter {
     }
 
     private RuleDto buildRuleDto(Rule rule) {
-        return new RuleDto()
+        RuleDto ruleDto = new RuleDto()
                 .setUuid(rule.getUuid())
                 .setAlias(rule.getAlias())
-                .setPattern(rule.getPattern().toString())
                 .setDomainName(rule.getDomain().getName());
+
+        if (systemRulesMaskingEnabled) {
+            String originPattern = rule.getPattern().toString();
+            int radius = originPattern.length() / 4;
+            String maskedPattern = StringHelper.replaceAroundMiddle(
+                    originPattern,
+                    systemRulesMaskingSymbol,
+                    radius);
+            ruleDto.setPattern(maskedPattern);
+        }
+
+        return ruleDto;
+
     }
 }
