@@ -3,6 +3,7 @@ package ru.akvine.profiley.services.impl;
 import com.google.common.base.Preconditions;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.ListUtils;
 import org.springframework.stereotype.Service;
 import ru.akvine.profiley.components.SecurityManager;
 import ru.akvine.profiley.exceptions.RuleNotFoundException;
@@ -32,6 +33,15 @@ public class RuleServiceImpl implements RuleService {
     private final SecurityManager securityManager;
 
     @Override
+    public List<Rule> getSystem() {
+        return ruleRepository
+                .findSystem()
+                .stream()
+                .map(Rule::new)
+                .toList();
+    }
+
+    @Override
     public List<Rule> get(long userId) {
         ListDomains listDomains = new ListDomains()
                 .setUserId(userId)
@@ -51,11 +61,23 @@ public class RuleServiceImpl implements RuleService {
     @Override
     public List<Rule> get(ListRules listRules) {
         Preconditions.checkNotNull(listRules, "listRules is null");
-        return ruleRepository
-                .findBy(listRules.getDomainName(), listRules.getUserUuid())
-                .stream()
-                .map(Rule::new)
-                .toList();
+
+        List<Rule> rulesBySystemDomains = List.of();
+        List<Rule> userRules = List.of();
+
+        if (listRules.isIncludeSystemDomains()) {
+            rulesBySystemDomains = ruleRepository.findSystem().stream().map(Rule::new).toList();
+        }
+
+        if (StringUtils.isNotBlank(listRules.getDomainName())) {
+            userRules = ruleRepository
+                    .findBy(listRules.getDomainName(), listRules.getUserUuid())
+                    .stream()
+                    .map(Rule::new)
+                    .toList();
+        }
+
+        return ListUtils.union(rulesBySystemDomains, userRules);
     }
 
     @Override

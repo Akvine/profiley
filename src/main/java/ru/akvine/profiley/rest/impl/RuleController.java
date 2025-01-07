@@ -2,6 +2,7 @@ package ru.akvine.profiley.rest.impl;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.akvine.profiley.rest.RuleControllerMeta;
@@ -9,6 +10,7 @@ import ru.akvine.profiley.rest.converter.RuleConverter;
 import ru.akvine.profiley.rest.dto.common.Response;
 import ru.akvine.profiley.rest.dto.common.SuccessfulResponse;
 import ru.akvine.profiley.rest.dto.rule.CreateRuleRequest;
+import ru.akvine.profiley.rest.dto.rule.ListRuleRequest;
 import ru.akvine.profiley.rest.dto.rule.ListRules;
 import ru.akvine.profiley.rest.dto.rule.UpdateRuleRequest;
 import ru.akvine.profiley.services.RuleService;
@@ -26,8 +28,8 @@ public class RuleController implements RuleControllerMeta {
     private final RuleService ruleService;
 
     @Override
-    public Response list(@RequestParam("domainName") String domainName) {
-        ListRules listRules = ruleConverter.convertTolistRules(domainName);
+    public Response list(@RequestBody @Valid ListRuleRequest request) {
+        ListRules listRules = ruleConverter.convertTolistRules(request);
         List<Rule> rules = ruleService.get(listRules);
         return ruleConverter.convertToListRuleResponse(rules);
     }

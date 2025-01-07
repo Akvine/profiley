@@ -2,7 +2,7 @@ package ru.akvine.profiley.providers;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import ru.akvine.profiley.enums.file.FileExtension;
+import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.services.ProfilerService;
 
 import java.util.Map;

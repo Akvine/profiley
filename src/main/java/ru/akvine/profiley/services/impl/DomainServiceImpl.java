@@ -3,6 +3,7 @@ package ru.akvine.profiley.services.impl;
 import com.google.common.base.Preconditions;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.ListUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.akvine.profiley.exceptions.DomainAlreadyExistsException;
@@ -40,13 +41,14 @@ public class DomainServiceImpl implements DomainService {
                 .map(Domain::new)
                 .toList();
 
+        List<Domain> systemDomains = List.of();
         if (list.isIncludeSystem()) {
-            return allUserDomains;
-        } else {
-            return allUserDomains.stream()
-                    .filter(domain -> !domain.isSystem())
+            systemDomains = domainRepository.findSystem()
+                    .stream().map(Domain::new)
                     .toList();
         }
+
+        return ListUtils.union(allUserDomains, systemDomains);
     }
 
     @Override

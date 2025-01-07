@@ -1,4 +1,4 @@
-package ru.akvine.profiley.enums.file;
+package ru.akvine.profiley.enums;
 
 import com.google.common.base.Preconditions;
 import lombok.AllArgsConstructor;

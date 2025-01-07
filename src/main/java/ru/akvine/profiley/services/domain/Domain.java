@@ -17,7 +17,9 @@ public class Domain extends Model<Long> {
         super(domain);
         this.id = domain.getId();
         this.name = domain.getName();
-        this.user = new User(domain.getUser());
+        if (domain.getUser() != null) {
+            this.user = new User(domain.getUser());
+        }
     }
 
     public boolean isSystem() {

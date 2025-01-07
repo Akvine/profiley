@@ -16,6 +16,12 @@ public interface DomainRepository extends JpaRepository<DomainEntity, Long> {
     List<DomainEntity> findAll(@Param("userId") long userId);
 
     @Query("from DomainEntity de " +
+            "where de.user is null " +
+            "and " +
+            "de.deleted = false")
+    List<DomainEntity> findSystem();
+
+    @Query("from DomainEntity de " +
             "where de.name = :name " +
             "and " +
             "de.user.uuid = :uuid " +

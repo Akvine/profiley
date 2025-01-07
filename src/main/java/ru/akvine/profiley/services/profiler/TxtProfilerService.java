@@ -3,9 +3,7 @@ package ru.akvine.profiley.services.profiler;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.akvine.profiley.async.RulesAsyncProvider;
-import ru.akvine.profiley.async.WordsAsyncProvider;
-import ru.akvine.profiley.enums.file.FileExtension;
+import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.exceptions.DomainNotDetectedException;
 import ru.akvine.profiley.exceptions.ProfileActionException;
 import ru.akvine.profiley.services.DetectByRulesService;
@@ -47,7 +45,7 @@ public class TxtProfilerService extends CommonProfilerService {
             while ((line = reader.readLine()) != null) {
                 List<String> lineWords = rowProcessorService.tokenize(line);
                 for (String word : lineWords) {
-                    String transformedWord = word.toLowerCase();
+                    String transformedWord = rowProcessorService.trimSpecialSymbols(word).toLowerCase();
 
                     String possibleDomainByWords = "";
                     try {

@@ -1,4 +1,4 @@
-package ru.akvine.profiley.enums.file;
+package ru.akvine.profiley.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

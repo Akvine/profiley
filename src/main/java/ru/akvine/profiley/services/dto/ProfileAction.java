@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.profiley.services.domain.Dictionary;
 import ru.akvine.profiley.services.domain.Rule;
-import ru.akvine.profiley.enums.file.FileExtension;
+import ru.akvine.profiley.enums.FileExtension;
 
 import java.io.InputStream;
 import java.util.Collection;

@@ -12,4 +12,6 @@ public class RuleDto {
     private String alias;
     @NotBlank
     private String pattern;
+    @NotBlank
+    private String domainName;
 }

@@ -3,7 +3,7 @@ package ru.akvine.profiley.rest.validator;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import ru.akvine.profiley.enums.file.FileExtension;
+import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.exceptions.FileExtensionNotSupportedException;
 
 @Component

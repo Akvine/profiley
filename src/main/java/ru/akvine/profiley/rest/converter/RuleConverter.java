@@ -17,10 +17,11 @@ import java.util.Collection;
 public class RuleConverter {
     private final SecurityManager securityManager;
 
-    public ListRules convertTolistRules(String domainName) {
-        Preconditions.checkNotNull(domainName, "domainName is null");
+    public ListRules convertTolistRules(ListRuleRequest request) {
+        Preconditions.checkNotNull(request, "listRuleRequest is null");
         return new ListRules()
-                .setDomainName(domainName)
+                .setIncludeSystemDomains(request.isIncludeSystemDomains())
+                .setDomainName(request.getDomainName())
                 .setUserUuid(securityManager.getCurrentUser().getUuid());
     }
 
@@ -57,6 +58,7 @@ public class RuleConverter {
         return new RuleDto()
                 .setUuid(rule.getUuid())
                 .setAlias(rule.getAlias())
-                .setPattern(rule.getPattern().toString());
+                .setPattern(rule.getPattern().toString())
+                .setDomainName(rule.getDomain().getName());
     }
 }

@@ -64,7 +64,7 @@ CREATE TABLE RULE_ENTITY (
     DOMAIN_ID           BIGINT          NOT NULL,
     UUID                VARCHAR(255)    NOT NULL,
     ALIAS               VARCHAR(255),
-    PATTERN             VARCHAR(255)    NOT NULL,
+    PATTERN             VARCHAR(1024)    NOT NULL,
     CREATED_DATE        TIMESTAMP       NOT NULL,
     UPDATED_DATE        TIMESTAMP,
     IS_DELETED          BOOLEAN         NOT NULL,
@@ -106,3 +106,29 @@ CREATE TABLE SPRING_SESSION_ATTRIBUTES
 );
 CREATE INDEX SPRING_SESSION_ATTRIBUTES_INDX on SPRING_SESSION_ATTRIBUTES (SESSION_PRIMARY_ID);
 --rollback not required
+
+--changeset akvine:PROFILEY-1-7
+--preconditions onFail:MARK_RAN onError:HALT onUpdateSql:FAIL
+--precondition-sql-check expectedResult:0 select count(*) from DOMAIN_ENTITY where user_id is null;
+INSERT INTO DOMAIN_ENTITY (ID, UUID, NAME, CREATED_DATE, IS_DELETED, USER_ID) VALUES (-1, 'STUB_UUID', 'email', '06-01-2025 00:00', false, null);
+INSERT INTO DOMAIN_ENTITY (ID, UUID, NAME, CREATED_DATE, IS_DELETED, USER_ID) VALUES (-2, 'STUB_UUID', 'pan', '07-01-2025 00:00', false, null);
+INSERT INTO DOMAIN_ENTITY (ID, UUID, NAME, CREATED_DATE, IS_DELETED, USER_ID) VALUES (-3, 'STUB_UUID', 'ipv4', '07-01-2025 00:00', false, null);
+INSERT INTO DOMAIN_ENTITY (ID, UUID, NAME, CREATED_DATE, IS_DELETED, USER_ID) VALUES (-4, 'STUB_UUID', 'url', '07-01-2025 00:00', false, null);
+INSERT INTO DOMAIN_ENTITY (ID, UUID, NAME, CREATED_DATE, IS_DELETED, USER_ID) VALUES (-5, 'STUB_UUID', 'ipv6', '07-01-2025 00:00', false, null);
+INSERT INTO DOMAIN_ENTITY (ID, UUID, NAME, CREATED_DATE, IS_DELETED, USER_ID) VALUES (-6, 'STUB_UUID', 'uuid', '07-01-2025 00:00', false, null);
+INSERT INTO DOMAIN_ENTITY (ID, UUID, NAME, CREATED_DATE, IS_DELETED, USER_ID) VALUES (-7, 'STUB_UUID', 'date', '07-01-2025 00:00', false, null);
+INSERT INTO DOMAIN_ENTITY (ID, UUID, NAME, CREATED_DATE, IS_DELETED, USER_ID) VALUES (-8, 'STUB_UUID', 'time', '07-01-2025 00:00', false, null);
+
+--changeset akvine:PROFILEY-1-8
+--preconditions onFail:MARK_RAN onError:HALT onUpdateSql:FAIL
+--precondition-sql-check expectedResult:0 select count(*) from RULE_ENTITY re join DOMAIN_ENTITY de on re.domain_id = de.id where user_id is null;
+INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED) VALUES (-1, '6b0a1aac-f0d4-42ca-a53d-99c16c194f38', -1, '^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$', '06-01-2025 00:00', false);
+INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED) VALUES (-2, '6b0a1aac-f0d4-42ca-a53d-99c16c194f39', -2, '^(\d{13,19})$', '06-01-2025 00:00', false);
+INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED) VALUES (-3, '6b0a1aac-f0d4-42ca-a53d-99c16c194f37', -3, '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$', '06-01-2025 00:00', false);
+INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED) VALUES (-4, '6b0a1aac-f0d4-42ca-a53d-99c16c194f36', -4, '^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(/.*)?$', '06-01-2025 00:00', false);
+INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED) VALUES (-5, '6b0a1aac-f0d4-42ca-a53d-99c16c194f35', -5, '^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))$', '06-01-2025 00:00', false);
+INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED, ALIAS) VALUES (-6, '6b0a1aac-f0d4-42ca-a53d-99c16c194f34', -6, '^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$', '06-01-2025 00:00', false, 'uuid with dashes');
+INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED, ALIAS) VALUES (-7, '6b0a1aac-f0d4-42ca-a53d-99c16c194f33', -7, '^((0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-[12]\d{3})$', '06-01-2025 00:00', false, 'dd-mm-YYYY');
+INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED, ALIAS) VALUES (-8, '6b0a1aac-f0d4-42ca-a53d-99c16c194f32', -7, '^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$', '06-01-2025 00:00', false, 'YYYY-mm-dd');
+INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED, ALIAS) VALUES (-9, '6b0a1aac-f0d4-42ca-a53d-99c16c194f31', -8, '^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$', '06-01-2025 00:00', false, 'HH:mm AM/PM format');
+INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED, ALIAS) VALUES (-10, '6b0a1aac-f0d4-42ca-a53d-99c16c194f30', -8, '^(0[0-9]|1[0-9]|2[1-4]):(0[0-9]|[1-5][0-9]):(0[0-9]|[1-5][0-9])$', '06-01-2025 00:00', false, 'time: hh:mm:ss format');

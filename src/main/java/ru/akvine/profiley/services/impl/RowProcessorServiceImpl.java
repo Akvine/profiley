@@ -9,11 +9,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class RowProcessorServiceImpl implements RowProcessorService {
-    private final static String SPECIAL_CONSTANTS_REGEXP = "[!\"#$%&'()*+,\\-./:;<=>?@\\\\[\\\\]^_`{|}~\\\\\\\\]";
+    private final static String REGEXP = "^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$";
 
     @Override
     public List<String> tokenize(String row) {
-        String formattedRow = row.replaceAll(SPECIAL_CONSTANTS_REGEXP, "");
-        return List.of(formattedRow.split(" "));
+        return List.of(row.split(" "));
+    }
+
+    @Override
+    public String trimSpecialSymbols(String row) {
+        return row.replaceAll(REGEXP, "");
     }
 }

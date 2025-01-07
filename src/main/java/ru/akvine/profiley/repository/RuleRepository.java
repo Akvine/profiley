@@ -18,6 +18,12 @@ public interface RuleRepository extends JpaRepository<RuleEntity, Long> {
     Set<RuleEntity> findAll(@Param("domains") Collection<Long> domainsIds);
 
     @Query("from RuleEntity re where " +
+            "re.deleted = false " +
+            "and " +
+            "re.domain.user is null")
+    Set<RuleEntity> findSystem();
+
+    @Query("from RuleEntity re where " +
             "re.domain.name = :domainName " +
             "and " +
             "re.domain.user.uuid = :userUuid " +

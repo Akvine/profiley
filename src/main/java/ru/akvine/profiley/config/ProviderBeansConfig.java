@@ -2,7 +2,7 @@ package ru.akvine.profiley.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.akvine.profiley.enums.file.FileExtension;
+import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.providers.ProfilerServiceProvider;
 import ru.akvine.profiley.services.ProfilerService;
 

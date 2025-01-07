@@ -12,6 +12,9 @@ import java.util.List;
 
 public interface RuleService {
     @Transactional
+    List<Rule> getSystem();
+
+    @Transactional
     List<Rule> get(long userId);
 
     @Transactional
