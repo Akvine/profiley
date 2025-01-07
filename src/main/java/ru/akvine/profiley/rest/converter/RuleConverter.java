@@ -75,6 +75,8 @@ public class RuleConverter {
                     systemRulesMaskingSymbol,
                     radius);
             ruleDto.setPattern(maskedPattern);
+        } else {
+            ruleDto.setPattern(rule.getPattern().toString());
         }
 
         return ruleDto;
