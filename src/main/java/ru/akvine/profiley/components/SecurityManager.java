@@ -1,6 +1,5 @@
 package ru.akvine.profiley.components;
 
-import com.google.common.base.Preconditions;
 import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -10,8 +9,9 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import ru.akvine.profiley.config.security.UserAuthentication;
-import ru.akvine.profiley.services.domain.User;
 import ru.akvine.profiley.exceptions.NoSessionException;
+import ru.akvine.profiley.services.domain.User;
+import ru.akvine.profiley.utils.Asserts;
 
 @Component
 @RequiredArgsConstructor
@@ -56,7 +56,7 @@ public class SecurityManager {
 
     public UserAuthentication getCurrentUser() {
         UserAuthentication user = getCurrentUserOrNull();
-        Preconditions.checkNotNull(user, "user is null");
+        Asserts.isNotNull(user, "user is null");
         return user;
     }
 

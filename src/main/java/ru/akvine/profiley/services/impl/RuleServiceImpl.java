@@ -1,6 +1,5 @@
 package ru.akvine.profiley.services.impl;
 
-import com.google.common.base.Preconditions;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.ListUtils;
@@ -11,14 +10,15 @@ import ru.akvine.profiley.repository.RuleRepository;
 import ru.akvine.profiley.repository.entity.DomainEntity;
 import ru.akvine.profiley.repository.entity.RuleEntity;
 import ru.akvine.profiley.rest.dto.rule.ListRules;
-import ru.akvine.profiley.services.domain.Domain;
-import ru.akvine.profiley.services.domain.Rule;
 import ru.akvine.profiley.services.DomainService;
 import ru.akvine.profiley.services.RuleService;
+import ru.akvine.profiley.services.domain.Domain;
+import ru.akvine.profiley.services.domain.Rule;
 import ru.akvine.profiley.services.dto.domain.ListDomains;
 import ru.akvine.profiley.services.dto.rule.CreateRule;
 import ru.akvine.profiley.services.dto.rule.DeleteRule;
 import ru.akvine.profiley.services.dto.rule.UpdateRule;
+import ru.akvine.profiley.utils.Asserts;
 import ru.akvine.profiley.utils.UUIDGenerator;
 
 import java.util.Date;
@@ -60,7 +60,7 @@ public class RuleServiceImpl implements RuleService {
 
     @Override
     public List<Rule> get(ListRules listRules) {
-        Preconditions.checkNotNull(listRules, "listRules is null");
+        Asserts.isNotNull(listRules, "listRules is null");
 
         List<Rule> rulesBySystemDomains = List.of();
         List<Rule> userRules = List.of();
@@ -82,7 +82,7 @@ public class RuleServiceImpl implements RuleService {
 
     @Override
     public Rule create(CreateRule createRule) {
-        Preconditions.checkNotNull(createRule, "createRule is null");
+        Asserts.isNotNull(createRule, "createRule is null");
 
         String domainName = createRule.getDomainName();
         DomainEntity domain = domainService.verifyExistsByNameAndUserUuid(
@@ -100,7 +100,7 @@ public class RuleServiceImpl implements RuleService {
 
     @Override
     public Rule update(UpdateRule updateRule) {
-        Preconditions.checkNotNull(updateRule, "updateRule is null");
+        Asserts.isNotNull(updateRule, "updateRule is null");
 
         String uuid = updateRule.getUuid();
         String userUuid = updateRule.getUserUuid();
@@ -131,7 +131,7 @@ public class RuleServiceImpl implements RuleService {
 
     @Override
     public void delete(DeleteRule deleteRule) {
-        Preconditions.checkNotNull(deleteRule, "deleteRule is null");
+        Asserts.isNotNull(deleteRule, "deleteRule is null");
 
         String uuid = deleteRule.getUuid();
         String userUuid = deleteRule.getUserUuid();

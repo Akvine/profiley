@@ -1,6 +1,5 @@
 package ru.akvine.profiley.services.impl;
 
-import com.google.common.base.Preconditions;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.ListUtils;
@@ -17,6 +16,7 @@ import ru.akvine.profiley.services.domain.Domain;
 import ru.akvine.profiley.services.dto.domain.CreateDomain;
 import ru.akvine.profiley.services.dto.domain.ListDomains;
 import ru.akvine.profiley.services.dto.domain.UpdateDomain;
+import ru.akvine.profiley.utils.Asserts;
 
 import java.util.Date;
 import java.util.List;
@@ -34,7 +34,7 @@ public class DomainServiceImpl implements DomainService {
     @Transactional
     //TODO: переписать на Query DSL или Criteria API
     public List<Domain> get(ListDomains list) {
-        Preconditions.checkNotNull(list, "list is null");
+        Asserts.isNotNull(list, "list is null");
         List<Domain> allUserDomains = domainRepository
                 .findAll(list.getUserId())
                 .stream()
@@ -53,7 +53,7 @@ public class DomainServiceImpl implements DomainService {
 
     @Override
     public Domain create(CreateDomain createDomain) {
-        Preconditions.checkNotNull(createDomain, "createDomain is null");
+        Asserts.isNotNull(createDomain, "createDomain is null");
 
         String userUuid = createDomain.getUserUuid();
         String name = createDomain.getName();
@@ -78,7 +78,7 @@ public class DomainServiceImpl implements DomainService {
 
     @Override
     public Domain update(UpdateDomain updateDomain) {
-        Preconditions.checkNotNull(updateDomain, "updateDomain is null");
+        Asserts.isNotNull(updateDomain, "updateDomain is null");
 
         String domainName = updateDomain.getDomainName();
         String userUuid = updateDomain.getUserUuid();
@@ -95,8 +95,8 @@ public class DomainServiceImpl implements DomainService {
 
     @Override
     public void delete(String domainName, String userUuid) {
-        Preconditions.checkNotNull(domainName, "domainName is null");
-        Preconditions.checkNotNull(userUuid, "userUuid is null");
+        Asserts.isNotNull(domainName, "domainName is null");
+        Asserts.isNotNull(userUuid, "userUuid is null");
 
         DomainEntity domain = verifyExistsByNameAndUserUuid(domainName, userUuid);
         domain.setDeleted(true);
@@ -107,8 +107,8 @@ public class DomainServiceImpl implements DomainService {
 
     @Override
     public DomainEntity verifyExistsByNameAndUserUuid(String name, String userUuid) {
-        Preconditions.checkNotNull(name, "name is null");
-        Preconditions.checkNotNull(userUuid, "userUuid is null");
+        Asserts.isNotNull(name, "name is null");
+        Asserts.isNotNull(userUuid, "userUuid is null");
 
         return domainRepository
                 .findByNameAndUserUuid(name, userUuid)

@@ -1,15 +1,15 @@
 package ru.akvine.profiley.services.impl;
 
-import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.akvine.profiley.services.domain.User;
 import ru.akvine.profiley.exceptions.UserAlreadyExistsException;
 import ru.akvine.profiley.exceptions.UserNotFoundException;
 import ru.akvine.profiley.repository.UserRepository;
 import ru.akvine.profiley.repository.entity.UserEntity;
 import ru.akvine.profiley.services.UserService;
+import ru.akvine.profiley.services.domain.User;
+import ru.akvine.profiley.utils.Asserts;
 import ru.akvine.profiley.utils.UUIDGenerator;
 
 @Service
@@ -19,8 +19,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     public User create(String email, String password) {
-        Preconditions.checkNotNull(email, "email is null");
-        Preconditions.checkNotNull(password, "password is null");
+        Asserts.isNotNull(email, "email is null");
+        Asserts.isNotNull(password, "password is null");
 
         try {
             verifyExistsByEmail(email);
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserEntity verifyExistsByEmail(String email) {
-        Preconditions.checkNotNull(email, "email is null");
+        Asserts.isNotNull(email, "email is null");
         return userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User not found by email = [" + email + "]"));
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity verifyExistsByUuid(String uuid) {
-        Preconditions.checkNotNull(uuid, "uuid is null");
+        Asserts.isNotNull(uuid, "uuid is null");
         return userRepository
                 .findByUuid(uuid)
                 .orElseThrow(() -> new UserNotFoundException("User not found by uuid = [" + uuid + "]"));

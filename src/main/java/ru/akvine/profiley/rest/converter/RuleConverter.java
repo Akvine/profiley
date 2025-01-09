@@ -10,6 +10,7 @@ import ru.akvine.profiley.services.domain.Rule;
 import ru.akvine.profiley.services.dto.rule.CreateRule;
 import ru.akvine.profiley.services.dto.rule.DeleteRule;
 import ru.akvine.profiley.services.dto.rule.UpdateRule;
+import ru.akvine.profiley.utils.Asserts;
 import ru.akvine.profiley.utils.StringHelper;
 
 import java.util.Collection;
@@ -25,7 +26,7 @@ public class RuleConverter {
     private char systemRulesMaskingSymbol;
 
     public ListRules convertTolistRules(ListRuleRequest request) {
-        Preconditions.checkNotNull(request, "listRuleRequest is null");
+        Asserts.isNotNull(request, "listRuleRequest is null");
         return new ListRules()
                 .setIncludeSystemDomains(request.isIncludeSystemDomains())
                 .setDomainName(request.getDomainName())
@@ -33,7 +34,7 @@ public class RuleConverter {
     }
 
     public CreateRule convertToCreateRule(CreateRuleRequest request) {
-        Preconditions.checkNotNull(request, "createRuleRequest is null");
+        Asserts.isNotNull(request, "createRuleRequest is null");
         return new CreateRule()
                 .setAlias(request.getAlias())
                 .setPattern(request.getPattern())
@@ -41,7 +42,7 @@ public class RuleConverter {
     }
 
     public UpdateRule convertToUpdateRule(UpdateRuleRequest request) {
-        Preconditions.checkNotNull(request, "updateRuleRequest is null");
+        Asserts.isNotNull(request, "updateRuleRequest is null");
         return new UpdateRule()
                 .setAlias(request.getAlias())
                 .setUuid(request.getUuid())
@@ -51,7 +52,7 @@ public class RuleConverter {
     }
 
     public DeleteRule convertToDeleteRule(String uuid) {
-        Preconditions.checkNotNull(uuid, "uuid is null");
+        Asserts.isNotNull(uuid, "uuid is null");
         return new DeleteRule()
                 .setUuid(uuid)
                 .setUserUuid(securityManager.getCurrentUser().getUuid());

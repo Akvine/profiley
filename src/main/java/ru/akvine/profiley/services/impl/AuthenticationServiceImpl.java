@@ -1,14 +1,14 @@
 package ru.akvine.profiley.services.impl;
 
-import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.akvine.profiley.services.domain.User;
 import ru.akvine.profiley.repository.entity.UserEntity;
 import ru.akvine.profiley.services.AuthenticationService;
 import ru.akvine.profiley.services.UserService;
+import ru.akvine.profiley.services.domain.User;
+import ru.akvine.profiley.utils.Asserts;
 
 @Service
 @RequiredArgsConstructor
@@ -18,8 +18,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User authenticate(String email, String password) {
-        Preconditions.checkNotNull(email, "email is null");
-        Preconditions.checkNotNull(password, "password is null");
+        Asserts.isNotNull(email, "email is null");
+        Asserts.isNotNull(password, "password is null");
 
         UserEntity userEntity = userService.verifyExistsByEmail(email);
         if (!passwordEncoder.matches(password, userEntity.getHash())) {

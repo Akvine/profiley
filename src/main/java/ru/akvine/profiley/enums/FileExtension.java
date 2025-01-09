@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import ru.akvine.profiley.exceptions.FileExtensionNotSupportedException;
+import ru.akvine.profiley.utils.Asserts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public enum FileExtension {
     }
 
     public static FileExtension from(String extension) {
-        Preconditions.checkNotNull(extension, "fileExtension is null");
+        Asserts.isNotNull(extension, "fileExtension is null");
 
         for (FileExtension enumExtension : values()) {
             if (enumExtension.getExtension().equals(extension)) {
