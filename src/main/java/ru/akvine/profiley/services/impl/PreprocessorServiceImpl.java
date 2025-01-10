@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class PreprocessorServiceImp implements PreprocessorService {
+public class PreprocessorServiceImpl implements PreprocessorService {
     private final RuleService ruleService;
     private final WordService wordService;
     private final FileExtractor fileExtractor;
