@@ -4,6 +4,6 @@ import ru.akvine.profiley.services.domain.Dictionary;
 
 import java.util.Collection;
 
-public interface DetectByWordsService {
+public interface DetectByDictionariesService {
     String detect(String value, Collection<Dictionary> dictionaries);
 }

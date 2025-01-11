@@ -3,14 +3,14 @@ package ru.akvine.profiley.services.impl;
 import org.springframework.stereotype.Service;
 import ru.akvine.profiley.services.domain.Dictionary;
 import ru.akvine.profiley.exceptions.DomainNotDetectedException;
-import ru.akvine.profiley.services.DetectByWordsService;
+import ru.akvine.profiley.services.DetectByDictionariesService;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class DetectByWordsServiceImpl implements DetectByWordsService {
+public class DetectByDictionariesServiceImpl implements DetectByDictionariesService {
 
     @Override
     public String detect(String value, Collection<Dictionary> dictionaries) {

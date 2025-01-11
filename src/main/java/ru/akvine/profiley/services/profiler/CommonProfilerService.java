@@ -2,7 +2,7 @@ package ru.akvine.profiley.services.profiler;
 
 import lombok.RequiredArgsConstructor;
 import ru.akvine.profiley.services.DetectByRulesService;
-import ru.akvine.profiley.services.DetectByWordsService;
+import ru.akvine.profiley.services.DetectByDictionariesService;
 import ru.akvine.profiley.services.ProfilerService;
 import ru.akvine.profiley.services.dto.PossibleDomain;
 import ru.akvine.profiley.services.dto.ProfileAction;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public abstract class CommonProfilerService implements ProfilerService {
-    protected final DetectByWordsService detectByWordsService;
+    protected final DetectByDictionariesService detectByDictionariesService;
     protected final DetectByRulesService detectByRulesService;
 //    protected final WordsAsyncProvider wordsAsyncProvider;
 //    protected final RulesAsyncProvider rulesAsyncProvider;

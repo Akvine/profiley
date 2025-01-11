@@ -7,7 +7,7 @@ import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.exceptions.DomainNotDetectedException;
 import ru.akvine.profiley.exceptions.ProfileActionException;
 import ru.akvine.profiley.services.DetectByRulesService;
-import ru.akvine.profiley.services.DetectByWordsService;
+import ru.akvine.profiley.services.DetectByDictionariesService;
 import ru.akvine.profiley.services.RowProcessorService;
 import ru.akvine.profiley.services.dto.PossibleDomain;
 import ru.akvine.profiley.services.dto.ProfileAction;
@@ -24,10 +24,10 @@ import java.util.List;
 public class TxtProfilerService extends CommonProfilerService {
     private final RowProcessorService rowProcessorService;
 
-    public TxtProfilerService(DetectByWordsService detectByWordsService,
+    public TxtProfilerService(DetectByDictionariesService detectByDictionariesService,
                               DetectByRulesService detectByRulesService,
                               RowProcessorService rowProcessorService) {
-        super(detectByWordsService, detectByRulesService);
+        super(detectByDictionariesService, detectByRulesService);
         this.rowProcessorService = rowProcessorService;
 
     }
@@ -49,7 +49,7 @@ public class TxtProfilerService extends CommonProfilerService {
 
                     String possibleDomainByWords = "";
                     try {
-                        possibleDomainByWords = detectByWordsService.detect(transformedWord, profileAction.getDictionaries());
+                        possibleDomainByWords = detectByDictionariesService.detect(transformedWord, profileAction.getDictionaries());
                     } catch (DomainNotDetectedException exception) {
                         log.info("Not detected by words");
                     }
