@@ -10,9 +10,7 @@ import ru.akvine.profiley.services.dto.rule.UpdateRule;
 
 import java.util.List;
 
-public interface RuleService {
-    @Transactional
-    List<Rule> getSystem();
+public interface UserRuleService {
 
     @Transactional
     List<Rule> get(long userId);

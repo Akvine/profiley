@@ -11,7 +11,8 @@ import ru.akvine.profiley.repository.entity.DomainEntity;
 import ru.akvine.profiley.repository.entity.RuleEntity;
 import ru.akvine.profiley.rest.dto.rule.ListRules;
 import ru.akvine.profiley.services.DomainService;
-import ru.akvine.profiley.services.RuleService;
+import ru.akvine.profiley.services.UserRuleService;
+import ru.akvine.profiley.services.SystemRuleService;
 import ru.akvine.profiley.services.domain.Domain;
 import ru.akvine.profiley.services.domain.Rule;
 import ru.akvine.profiley.services.dto.domain.ListDomains;
@@ -26,20 +27,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class RuleServiceImpl implements RuleService {
+public class UserRuleServiceImpl implements UserRuleService {
     private final RuleRepository ruleRepository;
 
     private final DomainService domainService;
     private final SecurityManager securityManager;
-
-    @Override
-    public List<Rule> getSystem() {
-        return ruleRepository
-                .findSystem()
-                .stream()
-                .map(Rule::new)
-                .toList();
-    }
+    private final SystemRuleService systemRuleService;
 
     @Override
     public List<Rule> get(long userId) {
@@ -66,7 +59,7 @@ public class RuleServiceImpl implements RuleService {
         List<Rule> userRules = List.of();
 
         if (listRules.isIncludeSystemDomains()) {
-            rulesBySystemDomains = ruleRepository.findSystem().stream().map(Rule::new).toList();
+            rulesBySystemDomains = systemRuleService.list();
         }
 
         if (StringUtils.isNotBlank(listRules.getDomainName())) {

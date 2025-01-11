@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import ru.akvine.profiley.components.FileExtractor;
 import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.services.PreprocessorService;
-import ru.akvine.profiley.services.RuleService;
+import ru.akvine.profiley.services.SystemRuleService;
+import ru.akvine.profiley.services.UserRuleService;
 import ru.akvine.profiley.services.WordService;
 import ru.akvine.profiley.services.domain.Dictionary;
 import ru.akvine.profiley.services.domain.Rule;
@@ -19,7 +20,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PreprocessorServiceImpl implements PreprocessorService {
-    private final RuleService ruleService;
+    private final UserRuleService userRuleService;
+    private final SystemRuleService systemRuleService;
     private final WordService wordService;
     private final FileExtractor fileExtractor;
 
@@ -31,8 +33,8 @@ public class PreprocessorServiceImpl implements PreprocessorService {
                 .getOriginalFilename());
 
         List<Dictionary> dictionaries = wordService.get(userId);
-        List<Rule> userRules = ruleService.get(userId);
-        List<Rule> systemRules = ruleService.getSystem();
+        List<Rule> userRules = userRuleService.get(userId);
+        List<Rule> systemRules = systemRuleService.list();
 
         return new ProfileAction()
                 .setExtension(FileExtension.from(extension))

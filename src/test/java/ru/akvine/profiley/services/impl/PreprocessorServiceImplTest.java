@@ -11,7 +11,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import ru.akvine.profiley.components.FileExtractor;
 import ru.akvine.profiley.enums.FileExtension;
-import ru.akvine.profiley.services.RuleService;
+import ru.akvine.profiley.services.UserRuleService;
 import ru.akvine.profiley.services.WordService;
 import ru.akvine.profiley.services.dto.ProfileAction;
 import ru.akvine.profiley.services.dto.ProfileFile;
@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("PreprocessorServiceImpl tests")
 public class PreprocessorServiceImplTest {
     @Mock
-    private RuleService ruleService;
+    private UserRuleService userRuleService;
     @Mock
     private WordService wordService;
     @Mock
@@ -47,7 +47,7 @@ public class PreprocessorServiceImplTest {
                 randomValues);
         ProfileFile profileFile = new ProfileFile(1L, mockFile);
 
-        Mockito.when(ruleService.get(userId)).thenReturn(EMPTY_LIST);
+        Mockito.when(userRuleService.get(userId)).thenReturn(EMPTY_LIST);
         Mockito.when(wordService.get(userId)).thenReturn(EMPTY_LIST);
 
         InputStream inputStreamResult = new ByteArrayInputStream(randomValues);

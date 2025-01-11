@@ -13,7 +13,7 @@ import ru.akvine.profiley.rest.dto.rule.CreateRuleRequest;
 import ru.akvine.profiley.rest.dto.rule.ListRuleRequest;
 import ru.akvine.profiley.rest.dto.rule.ListRules;
 import ru.akvine.profiley.rest.dto.rule.UpdateRuleRequest;
-import ru.akvine.profiley.services.RuleService;
+import ru.akvine.profiley.services.UserRuleService;
 import ru.akvine.profiley.services.domain.Rule;
 import ru.akvine.profiley.services.dto.rule.CreateRule;
 import ru.akvine.profiley.services.dto.rule.DeleteRule;
@@ -25,33 +25,33 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RuleController implements RuleControllerMeta {
     private final RuleConverter ruleConverter;
-    private final RuleService ruleService;
+    private final UserRuleService userRuleService;
 
     @Override
     public Response list(@RequestBody @Valid ListRuleRequest request) {
         ListRules listRules = ruleConverter.convertTolistRules(request);
-        List<Rule> rules = ruleService.get(listRules);
+        List<Rule> rules = userRuleService.get(listRules);
         return ruleConverter.convertToListRuleResponse(rules);
     }
 
     @Override
     public Response create(@Valid CreateRuleRequest request) {
         CreateRule createRule = ruleConverter.convertToCreateRule(request);
-        Rule createdRule = ruleService.create(createRule);
+        Rule createdRule = userRuleService.create(createRule);
         return ruleConverter.convertToListRuleResponse(List.of(createdRule));
     }
 
     @Override
     public Response update(@Valid UpdateRuleRequest request) {
         UpdateRule updateRule = ruleConverter.convertToUpdateRule(request);
-        Rule updatedRule = ruleService.update(updateRule);
+        Rule updatedRule = userRuleService.update(updateRule);
         return ruleConverter.convertToListRuleResponse(List.of(updatedRule));
     }
 
     @Override
     public Response delete(@RequestParam("uuid") String uuid) {
         DeleteRule deleteRule = ruleConverter.convertToDeleteRule(uuid);
-        ruleService.delete(deleteRule);
+        userRuleService.delete(deleteRule);
         return new SuccessfulResponse();
     }
 }
