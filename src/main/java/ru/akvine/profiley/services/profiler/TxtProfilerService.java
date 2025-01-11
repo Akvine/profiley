@@ -51,7 +51,7 @@ public class TxtProfilerService extends CommonProfilerService {
                     try {
                         possibleDomainByWords = detectByDictionariesService.detect(transformedWord, profileAction.getDictionaries());
                     } catch (DomainNotDetectedException exception) {
-                        log.info("Not detected by words");
+                        logger.info("Not detected by words");
                     }
 
                     if (StringUtils.isNotBlank(possibleDomainByWords)) {

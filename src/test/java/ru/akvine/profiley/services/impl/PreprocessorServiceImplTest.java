@@ -11,6 +11,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import ru.akvine.profiley.components.FileExtractor;
 import ru.akvine.profiley.enums.FileExtension;
+import ru.akvine.profiley.services.SystemRuleService;
 import ru.akvine.profiley.services.UserRuleService;
 import ru.akvine.profiley.services.WordService;
 import ru.akvine.profiley.services.dto.ProfileAction;
@@ -29,6 +30,8 @@ public class PreprocessorServiceImplTest {
     private UserRuleService userRuleService;
     @Mock
     private WordService wordService;
+    @Mock
+    private SystemRuleService systemRuleService;
     @Mock
     private FileExtractor fileExtractor;
 
@@ -49,6 +52,7 @@ public class PreprocessorServiceImplTest {
 
         Mockito.when(userRuleService.get(userId)).thenReturn(EMPTY_LIST);
         Mockito.when(wordService.get(userId)).thenReturn(EMPTY_LIST);
+        Mockito.when(systemRuleService.list()).thenReturn(EMPTY_LIST);
 
         InputStream inputStreamResult = new ByteArrayInputStream(randomValues);
         Mockito.when(fileExtractor.extractInputStream(mockFile))
