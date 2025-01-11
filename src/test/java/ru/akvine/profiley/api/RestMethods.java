@@ -6,5 +6,6 @@ import lombok.experimental.UtilityClass;
 public class RestMethods {
     public interface Security {
         String REGISTRATION_ENDPOINT = "security/registration";
+        String AUTHENTICATION_ENDPOINT = "security/auth";
     }
 }

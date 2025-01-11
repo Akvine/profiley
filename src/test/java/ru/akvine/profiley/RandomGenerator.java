@@ -1,7 +1,10 @@
 package ru.akvine.profiley;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.Random;
 
+@UtilityClass
 public class RandomGenerator {
     private final Random random = new Random();
 

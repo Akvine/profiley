@@ -8,14 +8,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 import ru.akvine.profiley.ProfileyApplication;
 
 @SpringBootTest(classes = ProfileyApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(scripts = "classpath:db/db-test-init.sql")
 public abstract class IntegrationTestsConfig {
     @LocalServerPort
     public int serverPort;
@@ -41,4 +39,6 @@ public abstract class IntegrationTestsConfig {
     public void destroy() {
         postgreSQLContainer.stop();
     }
+
+    protected static final String USER_PASSWORD = "123455";
 }

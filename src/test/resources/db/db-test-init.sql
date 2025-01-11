@@ -1,3 +1,6 @@
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+
 CREATE TABLE USER_ENTITY (
     ID                  BIGINT NOT NULL PRIMARY KEY,
     UUID                VARCHAR(255)         NOT NULL,
