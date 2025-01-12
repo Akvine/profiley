@@ -10,18 +10,7 @@ import java.util.Set;
 @Getter
 public enum FileType {
     TEXT(Set.of(
-            FileExtension.TXT,
-            FileExtension.LOG,
-            FileExtension.DOCX
-    )),
-    COLUMN(Set.of(
-            FileExtension.XLSX,
-            FileExtension.CSV,
-            FileExtension.ODS
-    )),
-    SPECIFIC(Set.of(
-            FileExtension.PDF
+            FileExtension.TXT
     ));
-
     private final Collection<FileExtension> supportedFileExtensions;
 }

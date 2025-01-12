@@ -1,23 +1,22 @@
-package ru.akvine.profiley.services.impl;
+package ru.akvine.profiley.rest.validator;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import ru.akvine.profiley.repository.entity.UserEntity;
-import ru.akvine.profiley.services.AuthenticationService;
 import ru.akvine.profiley.services.UserService;
 import ru.akvine.profiley.services.domain.User;
 import ru.akvine.profiley.utils.Asserts;
 
-@Service
+
+@Component
 @RequiredArgsConstructor
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class CredentialsValidator {
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
 
-    @Override
-    public User authenticate(String email, String password) {
+    public User validateCredentials(String email, String password) {
         Asserts.isNotNull(email, "email is null");
         Asserts.isNotNull(password, "password is null");
 

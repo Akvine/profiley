@@ -1,6 +1,5 @@
 package ru.akvine.profiley.enums;
 
-import com.google.common.base.Preconditions;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import ru.akvine.profiley.exceptions.FileExtensionNotSupportedException;
@@ -12,19 +11,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public enum FileExtension {
-    TXT("txt"),
-    LOG("log"),
-    DOCX("docx"),
-    DOC("doc"),
-
-    CSV("csv"),
-    XLSX("xlsx"),
-    XLS("xls"),
-    ODS("ods"),
-
-    PDF("pdf"),
-    XML("xml"),
-    JSON("json");
+    TXT("txt");
 
     private final String extension;
 

@@ -10,9 +10,9 @@ import lombok.experimental.Accessors;
 public class AuthRequest {
     @ToString.Exclude
     @NotBlank
-    private String username;
+    protected String email;
 
     @ToString.Exclude
     @NotBlank
-    private String password;
+    protected String password;
 }
