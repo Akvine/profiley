@@ -16,6 +16,8 @@ public final class ErrorCodes {
         String FIELD_NOT_PRESENTED_ERROR = "field.not.presented.error";
         String EMAIL_INVALID_ERROR = "email.invalid.error";
         String PASSWORD_INVALID_ERROR = "password.invalid.error";
+        String DICTIONARY_WORDS_COUNT_ERROR = "dictionary.words.count.error";
+        String FILE_EXTENSION_NOT_SUPPORTED = "file.extension.not.supported.error";
     }
 
     public interface User {

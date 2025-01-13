@@ -9,11 +9,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
-import ru.akvine.profiley.components.FileExtractor;
 import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.services.SystemRuleService;
 import ru.akvine.profiley.services.UserRuleService;
-import ru.akvine.profiley.services.WordService;
 import ru.akvine.profiley.services.dto.ProfileAction;
 import ru.akvine.profiley.services.dto.ProfileFile;
 

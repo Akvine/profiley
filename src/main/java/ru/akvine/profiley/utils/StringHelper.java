@@ -3,6 +3,9 @@ package ru.akvine.profiley.utils;
 import io.micrometer.common.util.StringUtils;
 import jakarta.annotation.Nullable;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.collections4.CollectionUtils;
+
+import java.util.Collection;
 
 @UtilityClass
 public class StringHelper {

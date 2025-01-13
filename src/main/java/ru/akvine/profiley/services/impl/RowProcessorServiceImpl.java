@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class RowProcessorServiceImpl implements RowProcessorService {
-    private final static String REGEXP = "^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$";
+    private final static String REGEXP = "^[^\\p{L}\\p{N}]+|[^\\p{L}\\p{N}]+$";
 
     @Override
     public List<String> tokenize(String row) {
