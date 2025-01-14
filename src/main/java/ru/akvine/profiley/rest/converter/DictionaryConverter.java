@@ -1,5 +1,6 @@
 package ru.akvine.profiley.rest.converter;
 
+import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -69,6 +70,7 @@ public class DictionaryConverter {
                 .setUuid(dictionary.getUuid())
                 .setDomainName(dictionary.getDomain().getName())
                 .setSeparator(dictionary.getSeparator())
+                .setLocale(dictionary.getLocale() != null ? dictionary.getLocale().toString() : null)
                 .setWords("[]" + (dictionary.getWords().isEmpty() ? "" : dictionary.getWords().getFirst()));
     }
 }

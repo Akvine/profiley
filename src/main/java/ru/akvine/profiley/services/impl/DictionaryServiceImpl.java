@@ -87,7 +87,8 @@ public class DictionaryServiceImpl implements DictionaryService {
         }
 
         if (StringUtils.isNotBlank(locale) &&
-                !dictionaryToUpdate.getLocale().equals(locale)) {
+                (dictionaryToUpdate.getLocale() == null ||
+                        !dictionaryToUpdate.getLocale().equals(locale))) {
             dictionaryToUpdate.setLocale(locale);
         }
 
