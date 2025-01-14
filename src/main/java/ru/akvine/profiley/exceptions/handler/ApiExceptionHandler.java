@@ -15,6 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import ru.akvine.profiley.constants.ErrorCodes;
+import ru.akvine.profiley.exceptions.DictionaryNotFoundException;
 import ru.akvine.profiley.exceptions.DomainAlreadyExistsException;
 import ru.akvine.profiley.exceptions.UserNotFoundException;
 import ru.akvine.profiley.exceptions.ValidationException;
@@ -102,6 +103,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorResponse> handleBadCredentials(BadCredentialsException exception) {
         logger.info("Bad credentials", exception);
+        ErrorResponse errorResponse = new ErrorResponse(
+                ErrorCodes.User.BAD_CREDENTIALS_ERROR,
+                exception.getMessage(),
+                exception.getMessage()
+        );
+        return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({DictionaryNotFoundException.class})
+    public ResponseEntity<ErrorResponse> handleDictionaryNotFoundException(DictionaryNotFoundException exception) {
         ErrorResponse errorResponse = new ErrorResponse(
                 ErrorCodes.User.BAD_CREDENTIALS_ERROR,
                 exception.getMessage(),

@@ -28,4 +28,8 @@ public final class ErrorCodes {
     public interface Domain {
         String DOMAIN_ALREADY_EXISTS_ERROR = "domain.alreadyExists.error";
     }
+
+    public interface Dictionary {
+        String DICTIONARY_NOT_FOUND_ERROR = "dictionary.notFound.error";
+    }
 }

@@ -3,18 +3,20 @@ package ru.akvine.profiley.rest.impl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import ru.akvine.profiley.components.SecurityManager;
 import ru.akvine.profiley.rest.DictionaryControllerMeta;
 import ru.akvine.profiley.rest.converter.DictionaryConverter;
 import ru.akvine.profiley.rest.dto.common.Response;
+import ru.akvine.profiley.rest.dto.common.SuccessfulResponse;
 import ru.akvine.profiley.rest.dto.dictionaries.CreateDictionaryRequest;
+import ru.akvine.profiley.rest.dto.dictionaries.UpdateDictionaryRequest;
 import ru.akvine.profiley.rest.validator.DictionaryValidator;
 import ru.akvine.profiley.services.DictionaryService;
 import ru.akvine.profiley.services.domain.Dictionary;
 import ru.akvine.profiley.services.dto.dictionary.CreateDictionary;
+import ru.akvine.profiley.services.dto.dictionary.UpdateDictionary;
 
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class DictionaryController implements DictionaryControllerMeta {
     }
 
     @Override
-    public Response createByRequest(@RequestBody @Valid CreateDictionaryRequest request) {
+    public Response createByJson(@RequestBody @Valid CreateDictionaryRequest request) {
         dictionaryValidator.verifyCreateDictionaryRequest(request);
         CreateDictionary createDictionary = dictionaryConverter.convertToCreateDictionary(request);
         Dictionary createdDictionary = dictionaryService.create(createDictionary);
@@ -49,5 +51,20 @@ public class DictionaryController implements DictionaryControllerMeta {
         CreateDictionary createDictionary = dictionaryConverter.convertToCreateDictionary(file, separator, locale, domainName);
         Dictionary createdDictionary = dictionaryService.create(createDictionary);
         return dictionaryConverter.convertToListDictionaryResponse(List.of(createdDictionary));
+    }
+
+    @Override
+    public Response updateByJson(UpdateDictionaryRequest request) {
+        dictionaryValidator.verifyUpdateDictionaryRequest(request);
+        UpdateDictionary updateDictionary = dictionaryConverter.convertToUpdateDictionary(request);
+        Dictionary updatedDictionary = dictionaryService.update(updateDictionary);
+        return dictionaryConverter.convertToListDictionaryResponse(List.of(updatedDictionary));
+    }
+
+    @Override
+    public Response delete(String uuid) {
+        String currentUserUuid = securityManager.getCurrentUser().getUuid();
+        dictionaryService.delete(uuid, currentUserUuid);
+        return new SuccessfulResponse();
     }
 }

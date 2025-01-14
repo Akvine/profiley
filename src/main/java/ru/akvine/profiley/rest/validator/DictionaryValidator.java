@@ -1,6 +1,7 @@
 package ru.akvine.profiley.rest.validator;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.akvine.profiley.constants.ErrorCodes;
 import ru.akvine.profiley.exceptions.ValidationException;
 import ru.akvine.profiley.rest.dto.dictionaries.CreateDictionaryRequest;
+import ru.akvine.profiley.rest.dto.dictionaries.UpdateDictionaryRequest;
 import ru.akvine.profiley.services.FileService;
 import ru.akvine.profiley.utils.Asserts;
 
@@ -43,6 +45,21 @@ public class DictionaryValidator {
 
         List<String> words = fileService.parseValuesToList(fileService.extractInputStream(file));
         verifyWordsCount(words);
+    }
+
+    public void verifyUpdateDictionaryRequest(UpdateDictionaryRequest request) {
+        Asserts.isNotNull(request, "updateDictionaryRequest is null");
+
+        if (request.getWords() != null && request.getWords().isEmpty()) {
+            throw new ValidationException(
+                    ErrorCodes.Validation.DICTIONARY_WORDS_COUNT_ERROR,
+                    "Words count can't be 0!"
+            );
+        }
+
+        if (CollectionUtils.isNotEmpty(request.getWords())) {
+            verifyWordsCount(request.getWords());
+        }
     }
 
     public void verifyWordsCount(Collection<String> words) {

@@ -7,9 +7,11 @@ import ru.akvine.profiley.components.SecurityManager;
 import ru.akvine.profiley.rest.dto.dictionaries.CreateDictionaryRequest;
 import ru.akvine.profiley.rest.dto.dictionaries.DictionaryDto;
 import ru.akvine.profiley.rest.dto.dictionaries.ListDictionaryResponse;
+import ru.akvine.profiley.rest.dto.dictionaries.UpdateDictionaryRequest;
 import ru.akvine.profiley.services.FileService;
 import ru.akvine.profiley.services.domain.Dictionary;
 import ru.akvine.profiley.services.dto.dictionary.CreateDictionary;
+import ru.akvine.profiley.services.dto.dictionary.UpdateDictionary;
 import ru.akvine.profiley.utils.Asserts;
 
 import java.util.List;
@@ -44,6 +46,17 @@ public class DictionaryConverter {
                 .setSeparator(separator)
                 .setDomainName(domainName)
                 .setWords(fileService.parseValuesToList(fileService.extractInputStream(file)));
+    }
+
+    public UpdateDictionary convertToUpdateDictionary(UpdateDictionaryRequest request) {
+        Asserts.isNotNull(request, "updateDictionaryRequest is null");
+        return new UpdateDictionary()
+                .setDomainName(request.getDomainName())
+                .setUuid(request.getUuid())
+                .setWords(request.getWords() == null ? null : request.getWords().stream().toList())
+                .setLocale(request.getLocale())
+                .setDomainName(request.getDomainName())
+                .setUserUuid(securityManager.getCurrentUser().getUuid());
     }
 
     public ListDictionaryResponse convertToListDictionaryResponse(List<Dictionary> dictionaries) {
