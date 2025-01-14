@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.lang.NonNull;
+import ru.akvine.profiley.enums.ValidatorType;
 
 @Accessors(chain = true)
 @Entity
@@ -16,7 +17,7 @@ import org.springframework.lang.NonNull;
 @NoArgsConstructor
 @Setter
 @Getter
-public class RuleEntity extends BaseEntity<Long> {
+public class  RuleEntity extends BaseEntity<Long> {
     @Id
     @Column(name = "ID", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ruleEntitySeq")
@@ -35,6 +36,11 @@ public class RuleEntity extends BaseEntity<Long> {
     @Column(name = "ALIAS")
     @Nullable
     private String alias;
+
+    @Column(name = "VALIDATOR_TYPE")
+    @Enumerated(EnumType.STRING)
+    @Nullable
+    private ValidatorType validatorType;
 
     @NonNull
     @Column(name = "PATTERN", nullable = false)

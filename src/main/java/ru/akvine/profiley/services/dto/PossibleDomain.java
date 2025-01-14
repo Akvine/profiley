@@ -9,4 +9,5 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class PossibleDomain {
     private String domainName;
+    private boolean correct;
 }

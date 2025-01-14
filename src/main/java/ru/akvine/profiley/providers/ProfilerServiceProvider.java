@@ -1,14 +1,9 @@
 package ru.akvine.profiley.providers;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.services.ProfilerService;
 
 import java.util.Map;
 
-@Getter
-@AllArgsConstructor
-public class ProfilerServiceProvider {
-    private final Map<FileExtension, ProfilerService> profilerServices;
+public record ProfilerServiceProvider(Map<FileExtension, ProfilerService> profilerServices) {
 }

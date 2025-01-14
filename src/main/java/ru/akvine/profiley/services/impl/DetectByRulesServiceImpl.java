@@ -2,24 +2,30 @@ package ru.akvine.profiley.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.akvine.profiley.services.domain.Rule;
+import ru.akvine.profiley.providers.DomainValidatorsProvider;
 import ru.akvine.profiley.services.DetectByRulesService;
+import ru.akvine.profiley.services.domain.Rule;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class DetectByRulesServiceImpl implements DetectByRulesService {
+    private final DomainValidatorsProvider domainValidatorsProvider;
 
     @Override
-    public List<String> detect(String value, Collection<Rule> rules) {
-        List<String> detectedDomains = new ArrayList<>();
+    public Map<String, Boolean> detect(String value, Collection<Rule> rules) {
+        Map<String, Boolean> detectedDomains = new HashMap<>();
 
         for (Rule rule : rules) {
             if (rule.getPattern().matcher(value).find()) {
-                detectedDomains.add(rule.getDomain().getName());
+                if (rule.getValidatorType() != null) {
+                    boolean isCorrect = domainValidatorsProvider
+                            .getByType(rule.getValidatorType()).validate(value);
+                    detectedDomains.put(rule.getDomain().getName(), isCorrect);
+                } else {
+                    detectedDomains.put(rule.getDomain().getName(), true);
+                }
             }
         }
 

@@ -51,6 +51,7 @@ CREATE TABLE RULE_ENTITY (
     UUID                VARCHAR(255)    NOT NULL,
     ALIAS               VARCHAR(255),
     PATTERN             VARCHAR(1024)    NOT NULL,
+    VALIDATOR_TYPE      VARCHAR(255),
     CREATED_DATE        TIMESTAMP       NOT NULL,
     UPDATED_DATE        TIMESTAMP,
     IS_DELETED          BOOLEAN         NOT NULL,

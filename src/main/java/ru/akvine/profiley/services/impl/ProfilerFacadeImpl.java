@@ -21,7 +21,7 @@ public class ProfilerFacadeImpl implements ProfilerFacade {
     public List<? extends PossibleDomain> profile(ProfileFile profileFile) {
         ProfileAction profileAction = preprocessorService.preprocess(profileFile);
         return profilerServiceProvider
-                .getProfilerServices()
+                .profilerServices()
                 .get(profileAction.getExtension())
                 .profile(profileAction);
     }
