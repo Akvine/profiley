@@ -18,7 +18,7 @@ public interface DictionaryControllerMeta {
     @PostMapping(value = "/by-file")
     Response createByFile(@RequestParam("file") MultipartFile file,
                           @RequestParam("separator") String separator,
-                          @RequestParam("locale") String locale,
+                          @RequestParam(value = "locale", required = false) String locale,
                           @RequestParam("domainName") String domainName);
 
     @PatchMapping(value = "/by-json")

@@ -1,5 +1,6 @@
 package ru.akvine.profiley.services.domain;
 
+import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,6 +17,7 @@ import java.util.Locale;
 public class Dictionary extends Model<Long> {
     private List<String> words;
     private String separator;
+    @Nullable
     private Locale locale;
     private Domain domain;
 
@@ -27,7 +29,10 @@ public class Dictionary extends Model<Long> {
         this.words = Arrays.asList(dictionaryEntity
                 .getWords()
                 .split(separator));
-        this.locale = Locale.of(dictionaryEntity.getLocale());
+        if (dictionaryEntity.getLocale() != null) {
+            this.locale = Locale.of(dictionaryEntity.getLocale());
+        }
+
         this.domain = new Domain(dictionaryEntity.getDomain());
     }
 }

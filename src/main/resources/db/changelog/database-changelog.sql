@@ -132,3 +132,8 @@ INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED,
 INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED, ALIAS) VALUES (-8, '6b0a1aac-f0d4-42ca-a53d-99c16c194f32', -7, '^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$', '06-01-2025 00:00', false, 'YYYY-mm-dd');
 INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED, ALIAS) VALUES (-9, '6b0a1aac-f0d4-42ca-a53d-99c16c194f31', -8, '^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$', '06-01-2025 00:00', false, 'HH:mm AM/PM format');
 INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED, ALIAS) VALUES (-10, '6b0a1aac-f0d4-42ca-a53d-99c16c194f30', -8, '^(0[0-9]|1[0-9]|2[1-4]):(0[0-9]|[1-5][0-9]):(0[0-9]|[1-5][0-9])$', '06-01-2025 00:00', false, 'time: hh:mm:ss format');
+
+--changeset akvine:PROFILEY-1-9
+--preconditions onFail:MARK_RAN onError:HALT onUpdateSql:FAIL
+--precondition-sql-check expectedResult:0 select count(*) from DICTIONARY_ENTITY de where de.locale is null;
+ALTER TABLE DICTIONARY_ENTITY ALTER COLUMN LOCALE DROP NOT NULL;

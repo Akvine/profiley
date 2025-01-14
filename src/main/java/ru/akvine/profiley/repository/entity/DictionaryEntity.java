@@ -36,8 +36,7 @@ public class DictionaryEntity {
     @NonNull
     private String separator;
 
-    @NonNull
-    @Column(name = "LOCALE", nullable = false)
+    @Column(name = "LOCALE")
     private String locale;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -21,6 +21,5 @@ public class CreateDictionaryRequest {
     @NotBlank
     private String domainName;
 
-    @NotBlank
     private String locale;
 }
