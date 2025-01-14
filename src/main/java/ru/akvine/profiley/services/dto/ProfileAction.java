@@ -1,5 +1,6 @@
 package ru.akvine.profiley.services.dto;
 
+import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.profiley.services.domain.Dictionary;
@@ -16,4 +17,8 @@ public class ProfileAction {
     private Collection<Rule> rules;
     private FileExtension extension;
     private InputStream file;
+    @Nullable
+    private String fileName;
+    @Nullable
+    private String userEmail;
 }
