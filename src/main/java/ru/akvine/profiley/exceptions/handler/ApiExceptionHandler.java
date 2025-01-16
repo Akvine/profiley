@@ -15,10 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import ru.akvine.profiley.constants.ErrorCodes;
-import ru.akvine.profiley.exceptions.DictionaryNotFoundException;
-import ru.akvine.profiley.exceptions.DomainAlreadyExistsException;
-import ru.akvine.profiley.exceptions.UserNotFoundException;
-import ru.akvine.profiley.exceptions.ValidationException;
+import ru.akvine.profiley.exceptions.*;
 import ru.akvine.profiley.rest.dto.common.ErrorResponse;
 
 import java.util.List;
@@ -114,7 +111,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({DictionaryNotFoundException.class})
     public ResponseEntity<ErrorResponse> handleDictionaryNotFoundException(DictionaryNotFoundException exception) {
         ErrorResponse errorResponse = new ErrorResponse(
-                ErrorCodes.User.BAD_CREDENTIALS_ERROR,
+                ErrorCodes.Dictionary.DICTIONARY_NOT_FOUND_ERROR,
+                exception.getMessage(),
+                exception.getMessage()
+        );
+        return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({DictionaryMaxCountException.class})
+    public ResponseEntity<ErrorResponse> handleDictionaryMaxCountException(DictionaryMaxCountException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                ErrorCodes.Dictionary.DICTIONARY_MAX_COUNT_ERROR,
                 exception.getMessage(),
                 exception.getMessage()
         );

@@ -20,4 +20,8 @@ public interface DictionaryRepository extends JpaRepository<DictionaryEntity, Lo
             "de.domain.user.uuid = :userUuid and de.domain.user.deleted = false")
     Optional<DictionaryEntity> findBy(@Param("uuid") String uuid,
                                       @Param("userUuid") String userUuid);
+
+    @Query("select count(*) from DictionaryEntity de where " +
+            "de.domain.user.uuid = :userUuid and de.domain.user.deleted = false")
+    long count(@Param("userUuid") String byUserUuid);
 }

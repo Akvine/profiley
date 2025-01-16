@@ -3,7 +3,9 @@ package ru.akvine.profiley.services.impl;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.akvine.profiley.exceptions.DictionaryMaxCountException;
 import ru.akvine.profiley.exceptions.DictionaryNotFoundException;
 import ru.akvine.profiley.repository.DictionaryRepository;
 import ru.akvine.profiley.repository.entity.DictionaryEntity;
@@ -28,6 +30,9 @@ public class DictionaryServiceImpl implements DictionaryService {
 
     private final DomainService domainService;
 
+    @Value("${max.dictionaries.count.per.user}")
+    private int maxDictionariesCount;
+
     @Override
     public List<Dictionary> list(long userId) {
         ListDomains listDomains = new ListDomains()
@@ -50,6 +55,12 @@ public class DictionaryServiceImpl implements DictionaryService {
         String domainName = createDictionary.getDomainName();
         String separator = createDictionary.getSeparator();
         String locale = createDictionary.getLocale();
+
+        long createdCount = dictionaryRepository.count(userUuid);
+        if (createdCount == maxDictionariesCount) {
+            String errorMessage = String.format("Can't create dictionary! Max count is reached = [%s]", maxDictionariesCount);
+            throw new DictionaryMaxCountException(errorMessage);
+        }
 
         DomainEntity domain = domainService.verifyExistsByNameAndUserUuid(domainName, userUuid);
         DictionaryEntity dictionaryToCreate = new DictionaryEntity()

@@ -31,5 +31,6 @@ public final class ErrorCodes {
 
     public interface Dictionary {
         String DICTIONARY_NOT_FOUND_ERROR = "dictionary.notFound.error";
+        String DICTIONARY_MAX_COUNT_ERROR = "dictionary.max.count.error";
     }
 }
