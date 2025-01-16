@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Service
@@ -47,12 +48,14 @@ public class TxtProfilerService extends CommonProfilerService {
 
             while ((line = reader.readLine()) != null) {
                 List<String> lineWords = rowProcessorService.tokenize(line);
-                for (String word : lineWords) {
-                    String transformedWord = rowProcessorService.trimSpecialSymbols(word).toLowerCase();
 
+                for (String word : lineWords) {
                     String possibleDomainByWords = "";
                     try {
-                        possibleDomainByWords = detectByDictionariesService.detect(transformedWord, profileAction.getDictionaries());
+                        possibleDomainByWords = detectByDictionariesService.detect(
+                                word.toLowerCase(Locale.ROOT),
+                                profileAction.getDictionaries()
+                        );
                     } catch (DomainNotDetectedException exception) {
                         List<String> uuids = profileAction.getDictionaries().stream().map(Dictionary::getUuid).toList();
                         logger.debug("Not detected by dictionaries with uuids = {}", uuids);
@@ -61,10 +64,10 @@ public class TxtProfilerService extends CommonProfilerService {
                     if (StringUtils.isNotBlank(possibleDomainByWords)) {
                         detectedDomains.add(new TxtPossibleDomain(possibleDomainByWords, currentLineNumber));
                     }
-
-                    Map<String, Boolean> possibleDomainsByRules = detectByRulesService.detect(transformedWord, profileAction.getRules());
-                    detectedDomains.addAll(convertToTxtPossibleDomains(possibleDomainsByRules, currentLineNumber));
                 }
+
+                Map<String, Boolean> possibleDomainsByRules = detectByRulesService.detect(line, profileAction.getRules());
+                detectedDomains.addAll(convertToTxtPossibleDomains(possibleDomainsByRules, currentLineNumber));
 
                 currentLineNumber += 1;
             }

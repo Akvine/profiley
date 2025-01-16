@@ -13,7 +13,7 @@ public class RowProcessorServiceImpl implements RowProcessorService {
 
     @Override
     public List<String> tokenize(String row) {
-        return List.of(row.split(" "));
+        return List.of(row.split("\\s+"));
     }
 
     @Override
