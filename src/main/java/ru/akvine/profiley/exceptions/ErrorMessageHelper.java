@@ -1,4 +1,4 @@
-package ru.akvine.profiley.exceptions.handler;
+package ru.akvine.profiley.exceptions;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.web.bind.MethodArgumentNotValidException;

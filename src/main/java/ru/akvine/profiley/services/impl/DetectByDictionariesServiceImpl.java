@@ -2,7 +2,7 @@ package ru.akvine.profiley.services.impl;
 
 import org.springframework.stereotype.Service;
 import ru.akvine.profiley.services.domain.Dictionary;
-import ru.akvine.profiley.exceptions.DomainNotDetectedException;
+import ru.akvine.profiley.exceptions.domain.DomainNotDetectedException;
 import ru.akvine.profiley.services.DetectByDictionariesService;
 
 import java.util.Collection;

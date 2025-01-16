@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import ru.akvine.profiley.constants.ErrorCodes;
-import ru.akvine.profiley.exceptions.ValidationException;
+import ru.akvine.profiley.exceptions.common.ValidationException;
 import ru.akvine.profiley.rest.dto.dictionaries.CreateDictionaryRequest;
 import ru.akvine.profiley.rest.dto.dictionaries.UpdateDictionaryRequest;
 import ru.akvine.profiley.services.FileService;

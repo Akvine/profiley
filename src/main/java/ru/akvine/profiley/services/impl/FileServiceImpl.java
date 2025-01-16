@@ -2,8 +2,8 @@ package ru.akvine.profiley.services.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ru.akvine.profiley.exceptions.FileExtractException;
-import ru.akvine.profiley.exceptions.FileParseException;
+import ru.akvine.profiley.exceptions.file.FileExtractException;
+import ru.akvine.profiley.exceptions.file.FileParseException;
 import ru.akvine.profiley.services.FileService;
 
 import java.io.BufferedReader;

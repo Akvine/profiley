@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
-import ru.akvine.profiley.exceptions.UserNotFoundException;
+import ru.akvine.profiley.exceptions.user.UserNotFoundException;
 import ru.akvine.profiley.repository.UserRepository;
 
 @Configuration

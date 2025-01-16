@@ -4,7 +4,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import ru.akvine.profiley.enums.FileExtension;
-import ru.akvine.profiley.exceptions.FileExtensionNotSupportedException;
+import ru.akvine.profiley.exceptions.file.FileExtensionNotSupportedException;
 
 @Component
 public class ProfilerValidator {

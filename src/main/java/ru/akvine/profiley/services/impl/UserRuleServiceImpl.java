@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.ListUtils;
 import org.springframework.stereotype.Service;
 import ru.akvine.profiley.components.SecurityManager;
-import ru.akvine.profiley.exceptions.RuleNotFoundException;
+import ru.akvine.profiley.exceptions.rule.RuleNotFoundException;
 import ru.akvine.profiley.repository.RuleRepository;
 import ru.akvine.profiley.repository.entity.DomainEntity;
 import ru.akvine.profiley.repository.entity.RuleEntity;

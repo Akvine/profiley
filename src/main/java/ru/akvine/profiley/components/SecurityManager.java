@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import ru.akvine.profiley.config.security.UserAuthentication;
-import ru.akvine.profiley.exceptions.NoSessionException;
+import ru.akvine.profiley.exceptions.common.NoSessionException;
 import ru.akvine.profiley.services.domain.User;
 import ru.akvine.profiley.utils.Asserts;
 

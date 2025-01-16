@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.akvine.profiley.constants.ErrorCodes;
-import ru.akvine.profiley.exceptions.ValidationException;
+import ru.akvine.profiley.exceptions.common.ValidationException;
 
 import java.util.regex.Pattern;
 

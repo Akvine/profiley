@@ -2,7 +2,7 @@ package ru.akvine.profiley.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import ru.akvine.profiley.exceptions.FileExtensionNotSupportedException;
+import ru.akvine.profiley.exceptions.file.FileExtensionNotSupportedException;
 import ru.akvine.profiley.utils.Asserts;
 
 import java.util.ArrayList;

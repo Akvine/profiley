@@ -1,4 +1,4 @@
-package ru.akvine.profiley.exceptions.handler;
+package ru.akvine.profiley.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

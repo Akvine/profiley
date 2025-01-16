@@ -1,4 +1,4 @@
-package ru.akvine.profiley.exceptions;
+package ru.akvine.profiley.exceptions.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

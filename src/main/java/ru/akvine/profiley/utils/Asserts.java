@@ -1,7 +1,7 @@
 package ru.akvine.profiley.utils;
 
 import lombok.experimental.UtilityClass;
-import ru.akvine.profiley.exceptions.AssertException;
+import ru.akvine.profiley.exceptions.common.AssertException;
 
 @UtilityClass
 public class Asserts {

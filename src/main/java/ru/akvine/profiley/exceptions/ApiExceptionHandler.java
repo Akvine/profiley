@@ -1,4 +1,4 @@
-package ru.akvine.profiley.exceptions.handler;
+package ru.akvine.profiley.exceptions;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +15,11 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import ru.akvine.profiley.constants.ErrorCodes;
-import ru.akvine.profiley.exceptions.*;
+import ru.akvine.profiley.exceptions.common.ValidationException;
+import ru.akvine.profiley.exceptions.dictionary.DictionaryMaxCountException;
+import ru.akvine.profiley.exceptions.dictionary.DictionaryNotFoundException;
+import ru.akvine.profiley.exceptions.domain.DomainAlreadyExistsException;
+import ru.akvine.profiley.exceptions.user.UserNotFoundException;
 import ru.akvine.profiley.rest.dto.common.ErrorResponse;
 
 import java.util.List;
