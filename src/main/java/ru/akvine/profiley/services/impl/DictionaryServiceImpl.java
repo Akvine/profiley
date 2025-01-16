@@ -34,9 +34,9 @@ public class DictionaryServiceImpl implements DictionaryService {
     private int maxDictionariesCount;
 
     @Override
-    public List<Dictionary> list(long userId) {
+    public List<Dictionary> list(String userUuid) {
         ListDomains listDomains = new ListDomains()
-                .setUserId(userId)
+                .setUserUuid(userUuid)
                 .setIncludeSystem(true);
         List<Domain> domains = domainService.get(listDomains);
         List<Long> ids = domains.stream().map(Domain::getId).toList();

@@ -9,6 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Accessors(chain = true)
 @AllArgsConstructor
 public class ProfileFile {
-    private long userId;
+    private String userUuid;
     private MultipartFile file;
 }

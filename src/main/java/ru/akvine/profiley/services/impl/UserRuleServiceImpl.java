@@ -35,10 +35,9 @@ public class UserRuleServiceImpl implements UserRuleService {
     private final SystemRuleService systemRuleService;
 
     @Override
-    public List<Rule> get(long userId) {
+    public List<Rule> get(String userUuid) {
         ListDomains listDomains = new ListDomains()
-                .setUserId(userId)
-                .setIncludeSystem(true);
+                .setUserUuid(userUuid);
         List<Domain> domains = domainService.get(listDomains);
         List<Long> ids = domains
                 .stream()

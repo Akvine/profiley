@@ -20,7 +20,7 @@ public class DomainConverter {
     public ListDomains convertToListDomains(ListDomainRequest request) {
         Asserts.isNotNull(request, "ListDomainRequest is null");
         return new ListDomains()
-                .setUserId(securityManager.getCurrentUser().getId())
+                .setUserUuid(securityManager.getCurrentUser().getUuid())
                 .setIncludeSystem(request.isIncludeSystems());
     }
 

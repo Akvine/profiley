@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserRuleService {
 
     @Transactional
-    List<Rule> get(long userId);
+    List<Rule> get(String userUuid);
 
     @Transactional
     List<Rule> get(ListRules listRules);

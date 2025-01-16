@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface DictionaryService {
     @Transactional
-    List<Dictionary> list(long userId);
+    List<Dictionary> list(String userUuid);
 
     @Transactional
     Dictionary create(CreateDictionary createDictionary);

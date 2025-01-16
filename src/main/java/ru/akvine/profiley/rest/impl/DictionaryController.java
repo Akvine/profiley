@@ -30,7 +30,7 @@ public class DictionaryController implements DictionaryControllerMeta {
 
     @Override
     public Response list() {
-        List<Dictionary> dictionaries = dictionaryService.list(securityManager.getCurrentUser().getId());
+        List<Dictionary> dictionaries = dictionaryService.list(securityManager.getCurrentUser().getUuid());
         return dictionaryConverter.convertToListDictionaryResponse(dictionaries);
     }
 

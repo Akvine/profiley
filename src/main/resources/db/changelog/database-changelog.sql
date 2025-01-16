@@ -158,3 +158,15 @@ INSERT INTO RULE_ENTITY (ID, UUID, DOMAIN_ID, PATTERN, CREATED_DATE, IS_DELETED,
 --preconditions onFail:MARK_RAN onError:HALT onUpdateSql:FAIL
 --precondition-sql-check expectedResult:0 select count(*) from DICTIONARY_ENTITY de where de.locale is null;
 ALTER TABLE DICTIONARY_ENTITY ALTER COLUMN LOCALE DROP NOT NULL;
+
+--changeset akvine:PROFILEY-1-10
+--preconditions onFail:MARK_RAN onError:HALT onUpdateSql:FAIL
+--precondition-sql-check expectedResult:0 select count(*) from information_schema.columns WHERE table_name = 'USER_ENTITY' AND column_name = 'IS_DISABLED_SYSTEM_DOMAINS';
+ALTER TABLE USER_ENTITY
+ADD COLUMN IS_DISABLED_SYSTEM_DOMAINS BOOLEAN NOT NULL DEFAULT FALSE;
+
+--changeset akvine:PROFILEY-1-11
+--preconditions onFail:MARK_RAN onError:HALT onUpdateSql:FAIL
+--precondition-sql-check expectedResult:0 select count(*) from information_schema.columns WHERE table_name = 'USER_ENTITY' AND column_name = 'IS_DISABLED_SYSTEM_RULES';
+ALTER TABLE USER_ENTITY
+ADD COLUMN IS_DISABLED_SYSTEM_RULES BOOLEAN NOT NULL DEFAULT FALSE;

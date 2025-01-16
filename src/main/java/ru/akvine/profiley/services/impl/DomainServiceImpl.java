@@ -36,7 +36,7 @@ public class DomainServiceImpl implements DomainService {
     public List<Domain> get(ListDomains list) {
         Asserts.isNotNull(list, "list is null");
         List<Domain> allUserDomains = domainRepository
-                .findAll(list.getUserId())
+                .findAll(list.getUserUuid())
                 .stream()
                 .map(Domain::new)
                 .toList();

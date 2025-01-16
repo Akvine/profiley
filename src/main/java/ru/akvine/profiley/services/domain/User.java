@@ -10,6 +10,8 @@ import ru.akvine.profiley.repository.entity.UserEntity;
 public class User extends Model<Long> {
     private String email;
     private String hash;
+    private boolean disabledSystemDomains;
+    private boolean disabledSystemRules;
 
     public User(UserEntity user) {
         super(user);
@@ -17,5 +19,7 @@ public class User extends Model<Long> {
 
         this.email = user.getEmail();
         this.hash = user.getHash();
+        this.disabledSystemDomains = user.isDisabledSystemDomains();
+        this.disabledSystemRules = user.isDisabledSystemRules();
     }
 }

@@ -9,6 +9,7 @@ import ru.akvine.profiley.repository.UserRepository;
 import ru.akvine.profiley.repository.entity.UserEntity;
 import ru.akvine.profiley.services.UserService;
 import ru.akvine.profiley.services.domain.User;
+import ru.akvine.profiley.services.dto.user.UpdateUser;
 import ru.akvine.profiley.utils.Asserts;
 import ru.akvine.profiley.utils.UUIDGenerator;
 
@@ -34,6 +35,30 @@ public class UserServiceImpl implements UserService {
             user.setUuid(UUIDGenerator.uuidWithoutDashes());
             return new User(userRepository.save(user));
         }
+    }
+
+    @Override
+    public User get(String uuid) {
+        return new User(verifyExistsByUuid(uuid));
+    }
+
+    @Override
+    public User update(UpdateUser updateUser) {
+        Asserts.isNotNull(updateUser, "updateUser is null");
+
+        UserEntity userToUpdate = verifyExistsByUuid(updateUser.getUserUuid());
+
+        if (updateUser.getDisabledSystemDomains() != null &&
+                userToUpdate.isDisabledSystemDomains() != updateUser.getDisabledSystemDomains()) {
+            userToUpdate.setDisabledSystemDomains(updateUser.getDisabledSystemDomains());
+        }
+
+        if (updateUser.getDisabledSystemRules() != null &&
+                userToUpdate.isDisabledSystemRules() != updateUser.getDisabledSystemRules()) {
+            userToUpdate.setDisabledSystemRules(updateUser.getDisabledSystemRules());
+        }
+
+        return new User(userRepository.save(userToUpdate));
     }
 
     public UserEntity verifyExistsByEmail(String email) {

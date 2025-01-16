@@ -37,6 +37,12 @@ public class UserEntity extends BaseEntity<Long> implements UserDetails {
     @NonNull
     private String hash;
 
+    @Column(name = "IS_DISABLED_SYSTEM_DOMAINS", nullable = false)
+    private boolean disabledSystemDomains;
+
+    @Column(name = "IS_DISABLED_SYSTEM_RULES", nullable = false)
+    private boolean disabledSystemRules;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();

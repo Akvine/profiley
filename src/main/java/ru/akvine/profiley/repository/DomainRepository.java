@@ -10,10 +10,10 @@ import java.util.Optional;
 
 public interface DomainRepository extends JpaRepository<DomainEntity, Long> {
     @Query("from DomainEntity de " +
-            "where de.user.id = :userId " +
+            "where de.user.uuid = :userUuid " +
             "and " +
             "de.deleted = false")
-    List<DomainEntity> findAll(@Param("userId") long userId);
+    List<DomainEntity> findAll(@Param("userUuid") String userUuid);
 
     @Query("from DomainEntity de " +
             "where de.user is null " +

@@ -12,6 +12,6 @@ public class ProfilerConverter {
     private final SecurityManager securityManager;
 
     public ProfileFile convertToProfileFile(MultipartFile file) {
-        return new ProfileFile(securityManager.getCurrentUser().getId(), file);
+        return new ProfileFile(securityManager.getCurrentUser().getUuid(), file);
     }
 }

@@ -8,6 +8,7 @@ import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.services.*;
 import ru.akvine.profiley.services.domain.Dictionary;
 import ru.akvine.profiley.services.domain.Rule;
+import ru.akvine.profiley.services.domain.User;
 import ru.akvine.profiley.services.dto.ProfileAction;
 import ru.akvine.profiley.services.dto.ProfileFile;
 
@@ -19,18 +20,30 @@ public class PreprocessorServiceImpl implements PreprocessorService {
     private final UserRuleService userRuleService;
     private final SystemRuleService systemRuleService;
     private final DictionaryService dictionaryService;
+    private final UserService userService;
     private final FileService fileService;
 
     @Override
     public ProfileAction preprocess(ProfileFile profileFile) {
-        long userId = profileFile.getUserId();
+        String userUuid = profileFile.getUserUuid();
+        User currentUser = userService.get(userUuid);
+
         String extension = FilenameUtils.getExtension(profileFile
                 .getFile()
                 .getOriginalFilename());
 
-        List<Dictionary> dictionaries = dictionaryService.list(userId);
-        List<Rule> userRules = userRuleService.get(userId);
-        List<Rule> systemRules = systemRuleService.list();
+        List<Dictionary> dictionaries;
+        List<Rule> userRules;
+        List<Rule> systemRules;
+
+        if (currentUser.isDisabledSystemDomains() || currentUser.isDisabledSystemRules()) {
+            systemRules = List.of();
+        } else {
+            systemRules = systemRuleService.list();
+        }
+
+        dictionaries = dictionaryService.list(userUuid);
+        userRules = userRuleService.get(userUuid);
 
         return new ProfileAction()
                 .setExtension(FileExtension.from(extension))
