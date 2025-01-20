@@ -18,6 +18,7 @@ public final class ErrorCodes {
         String PASSWORD_INVALID_ERROR = "password.invalid.error";
         String DICTIONARY_WORDS_COUNT_ERROR = "dictionary.words.count.error";
         String FILE_EXTENSION_NOT_SUPPORTED = "file.extension.not.supported.error";
+        String FILE_TYPE_NOT_VALID_ERROR = "file.type.not.valid.error";
     }
 
     public interface User {

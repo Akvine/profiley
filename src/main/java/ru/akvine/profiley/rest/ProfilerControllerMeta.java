@@ -10,6 +10,6 @@ import java.util.List;
 
 @RequestMapping(value = "/profile")
 public interface ProfilerControllerMeta {
-    @PostMapping
-    List<? extends PossibleDomain> profile(@RequestParam("file") MultipartFile file);
+    @PostMapping(value = "/text")
+    List<? extends PossibleDomain> profileTextFile(@RequestParam("file") MultipartFile file);
 }
