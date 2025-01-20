@@ -1,14 +1,12 @@
 package ru.akvine.profiley.repository.entity;
 
-
-import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.springframework.lang.NonNull;
 import ru.akvine.profiley.enums.ValidatorType;
 
 @Accessors(chain = true)
@@ -25,12 +23,12 @@ public class  RuleEntity extends BaseEntity<Long> {
     private Long id;
 
     @Column(name = "UUID", nullable = false, updatable = false)
-    @NonNull
+    @NotNull
     private String uuid;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DOMAIN_ID", nullable = false)
-    @Nonnull
+    @NotNull
     private DomainEntity domain;
 
     @Column(name = "ALIAS")
@@ -42,7 +40,7 @@ public class  RuleEntity extends BaseEntity<Long> {
     @Nullable
     private ValidatorType validatorType;
 
-    @NonNull
+    @NotNull
     @Column(name = "PATTERN", nullable = false)
     private String pattern;
 }

@@ -2,11 +2,11 @@ package ru.akvine.profiley.repository.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 import java.util.Date;
@@ -18,11 +18,11 @@ import java.util.Date;
 @MappedSuperclass
 public abstract class BaseEntity<ID> {
     @Column(name = "UUID", updatable = false, nullable = false)
-    @NonNull
+    @NotNull
     private String uuid;
 
     @Column(name = "CREATED_DATE", nullable = false)
-    @NonNull
+    @NotNull
     private Date createdDate = new Date();
 
     @Column(name = "UPDATED_DATE")

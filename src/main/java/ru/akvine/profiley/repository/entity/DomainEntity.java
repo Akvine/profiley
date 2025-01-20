@@ -1,11 +1,11 @@
 package ru.akvine.profiley.repository.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.springframework.lang.NonNull;
 
 @Accessors(chain = true)
 @Entity
@@ -18,10 +18,10 @@ public class DomainEntity extends BaseEntity<Long> {
     @Column(name = "ID", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "domainEntitySeq")
     @SequenceGenerator(name = "domainEntitySeq", sequenceName = "SEQ_DOMAIN_ENTITY", allocationSize = 1000)
-    @NonNull
+    @NotNull
     private Long id;
 
-    @NonNull
+    @NotNull
     @Column(name = "NAME", nullable = false)
     private String name;
 
