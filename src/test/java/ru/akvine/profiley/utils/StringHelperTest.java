@@ -25,7 +25,7 @@ public class StringHelperTest {
     @Test
     @DisplayName("Return null if radius input is null")
     void return_input_if_radius_is_null() {
-        String result = StringHelper.replaceAroundMiddle(null, 10);
+        String result = StringHelper.replaceAroundMiddle((String) null, 10);
 
         assertThat(result).isNull();
     }

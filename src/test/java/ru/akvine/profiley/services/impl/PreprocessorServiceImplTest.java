@@ -10,10 +10,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import ru.akvine.profiley.enums.FileExtension;
-import ru.akvine.profiley.services.DictionaryService;
-import ru.akvine.profiley.services.FileService;
-import ru.akvine.profiley.services.SystemRuleService;
-import ru.akvine.profiley.services.UserRuleService;
+import ru.akvine.profiley.services.*;
+import ru.akvine.profiley.services.domain.User;
 import ru.akvine.profiley.services.dto.ProfileAction;
 import ru.akvine.profiley.services.dto.ProfileFile;
 
@@ -29,6 +27,8 @@ public class PreprocessorServiceImplTest {
     @Mock
     private UserRuleService userRuleService;
     @Mock
+    private UserService userService;
+    @Mock
     private DictionaryService dictionaryService;
     @Mock
     private SystemRuleService systemRuleService;
@@ -42,16 +42,17 @@ public class PreprocessorServiceImplTest {
     @DisplayName("Get data from services and return action")
     void get_data_from_services_and_return_action() {
         byte[] randomValues = new byte[]{0, 1, 2, 3, 4};
-        long userId = 1L;
+        String userUuid = "550e8400-e29b-41d4-a716-446655440000";
         MultipartFile mockFile = new MockMultipartFile(
                 "name",
                 "original_file." + FileExtension.TXT.getExtension(),
                 "application/txt",
                 randomValues);
-        ProfileFile profileFile = new ProfileFile(1L, mockFile);
+        ProfileFile profileFile = new ProfileFile(userUuid, mockFile);
 
-        Mockito.when(userRuleService.get(userId)).thenReturn(EMPTY_LIST);
-        Mockito.when(dictionaryService.list(userId)).thenReturn(EMPTY_LIST);
+        Mockito.when(userRuleService.get(userUuid)).thenReturn(EMPTY_LIST);
+        Mockito.when(userService.get(userUuid)).thenReturn(new User());
+        Mockito.when(dictionaryService.list(userUuid)).thenReturn(EMPTY_LIST);
         Mockito.when(systemRuleService.list()).thenReturn(EMPTY_LIST);
 
         InputStream inputStreamResult = new ByteArrayInputStream(randomValues);

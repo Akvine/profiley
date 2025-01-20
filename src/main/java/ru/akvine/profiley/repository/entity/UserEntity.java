@@ -27,6 +27,7 @@ public class UserEntity extends BaseEntity<Long> implements UserDetails {
     private Long id;
 
     @Column(name = "UUID", nullable = false, updatable = false)
+    @NotNull
     private String uuid;
 
     @Column(name = "EMAIL", nullable = false)

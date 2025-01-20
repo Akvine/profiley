@@ -18,7 +18,6 @@ import java.util.Date;
 @MappedSuperclass
 public abstract class BaseEntity<ID> {
     @Column(name = "UUID", updatable = false, nullable = false)
-    @NotNull
     private String uuid;
 
     @Column(name = "CREATED_DATE", nullable = false)
