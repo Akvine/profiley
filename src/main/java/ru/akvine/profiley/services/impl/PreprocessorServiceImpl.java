@@ -46,6 +46,7 @@ public class PreprocessorServiceImpl implements PreprocessorService {
         userRules = userRuleService.get(userUuid);
 
         return new ProfileAction()
+                .setFileName(profileFile.getFile().getOriginalFilename())
                 .setExtension(FileExtension.from(extension))
                 .setFile(fileService.extractInputStream(profileFile.getFile()))
                 .setRules(ListUtils.union(userRules, systemRules))

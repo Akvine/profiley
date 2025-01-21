@@ -1,13 +1,12 @@
-package ru.akvine.profiley.services.dto;
+package ru.akvine.profiley.services.dto.rule;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-@AllArgsConstructor
-public class PossibleDomain {
+public class RuleInfo {
     private String domainName;
+    private String value;
     private boolean correct;
 }

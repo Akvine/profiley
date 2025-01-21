@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 import ru.akvine.profiley.providers.DomainValidatorsProvider;
 import ru.akvine.profiley.services.DetectByRulesService;
 import ru.akvine.profiley.services.domain.Rule;
+import ru.akvine.profiley.services.dto.rule.RuleInfo;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 
 @Service
@@ -15,8 +18,8 @@ public class DetectByRulesServiceImpl implements DetectByRulesService {
     private final DomainValidatorsProvider domainValidatorsProvider;
 
     @Override
-    public Map<String, Boolean> detect(String row, Collection<Rule> rules) {
-        Map<String, Boolean> detectedDomains = new HashMap<>();
+    public List<RuleInfo> detect(String row, Collection<Rule> rules) {
+        List<RuleInfo> detectedDomains = new ArrayList<>();
 
         for (Rule rule : rules) {
             Matcher matcher = rule.getPattern().matcher(row);
@@ -24,9 +27,15 @@ public class DetectByRulesServiceImpl implements DetectByRulesService {
                 if (rule.getValidatorType() != null) {
                     boolean isCorrect = domainValidatorsProvider
                             .getByType(rule.getValidatorType()).validate(matcher.group());
-                    detectedDomains.put(rule.getDomain().getName(), isCorrect);
+                    detectedDomains.add(new RuleInfo()
+                            .setDomainName(rule.getDomain().getName())
+                            .setValue(matcher.group())
+                            .setCorrect(isCorrect));
                 } else {
-                    detectedDomains.put(rule.getDomain().getName(), true);
+                    detectedDomains.add(new RuleInfo()
+                            .setDomainName(rule.getDomain().getName())
+                            .setValue(matcher.group())
+                            .setCorrect(true));
                 }
             }
         }

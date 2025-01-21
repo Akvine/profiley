@@ -13,14 +13,14 @@ import ru.akvine.profiley.rest.dto.rule.ListRules;
 import ru.akvine.profiley.services.DomainService;
 import ru.akvine.profiley.services.UserRuleService;
 import ru.akvine.profiley.services.SystemRuleService;
-import ru.akvine.profiley.services.domain.Domain;
+import ru.akvine.profiley.services.domain.domain.Domain;
 import ru.akvine.profiley.services.domain.Rule;
 import ru.akvine.profiley.services.dto.domain.ListDomains;
 import ru.akvine.profiley.services.dto.rule.CreateRule;
 import ru.akvine.profiley.services.dto.rule.DeleteRule;
 import ru.akvine.profiley.services.dto.rule.UpdateRule;
 import ru.akvine.profiley.utils.Asserts;
-import ru.akvine.profiley.utils.UUIDGenerator;
+import ru.akvine.profiley.utils.generators.UUIDGenerator;
 
 import java.util.Date;
 import java.util.List;

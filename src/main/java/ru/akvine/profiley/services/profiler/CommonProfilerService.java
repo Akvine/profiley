@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import ru.akvine.profiley.services.DetectByDictionariesService;
 import ru.akvine.profiley.services.DetectByRulesService;
 import ru.akvine.profiley.services.ProfilerService;
-import ru.akvine.profiley.services.dto.PossibleDomain;
+import ru.akvine.profiley.services.domain.domain.DetectedDomain;
 import ru.akvine.profiley.services.dto.ProfileAction;
 import ru.akvine.profiley.utils.Asserts;
 
@@ -18,7 +18,7 @@ public abstract class CommonProfilerService implements ProfilerService {
 //    protected final RulesAsyncProvider rulesAsyncProvider;
 
     @Override
-    public List<? extends PossibleDomain> profile(ProfileAction profileAction) {
+    public List<? extends DetectedDomain> profile(ProfileAction profileAction) {
         Asserts.isNotNull(profileAction, "profileAction is not null");
         return List.of();
     }

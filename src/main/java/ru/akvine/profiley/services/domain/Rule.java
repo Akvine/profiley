@@ -6,6 +6,7 @@ import lombok.experimental.Accessors;
 import ru.akvine.profiley.enums.ValidatorType;
 import ru.akvine.profiley.services.domain.base.Model;
 import ru.akvine.profiley.repository.entity.RuleEntity;
+import ru.akvine.profiley.services.domain.domain.Domain;
 
 import java.util.regex.Pattern;
 

@@ -11,7 +11,7 @@ import ru.akvine.profiley.services.UserService;
 import ru.akvine.profiley.services.domain.User;
 import ru.akvine.profiley.services.dto.user.UpdateUser;
 import ru.akvine.profiley.utils.Asserts;
-import ru.akvine.profiley.utils.UUIDGenerator;
+import ru.akvine.profiley.utils.generators.UUIDGenerator;
 
 @Service
 @RequiredArgsConstructor

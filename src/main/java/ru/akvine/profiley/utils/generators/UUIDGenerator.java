@@ -1,4 +1,4 @@
-package ru.akvine.profiley.utils;
+package ru.akvine.profiley.utils.generators;
 
 import lombok.experimental.UtilityClass;
 

@@ -12,7 +12,7 @@ import ru.akvine.profiley.repository.entity.DomainEntity;
 import ru.akvine.profiley.repository.entity.UserEntity;
 import ru.akvine.profiley.services.DomainService;
 import ru.akvine.profiley.services.UserService;
-import ru.akvine.profiley.services.domain.Domain;
+import ru.akvine.profiley.services.domain.domain.Domain;
 import ru.akvine.profiley.services.dto.domain.CreateDomain;
 import ru.akvine.profiley.services.dto.domain.ListDomains;
 import ru.akvine.profiley.services.dto.domain.UpdateDomain;

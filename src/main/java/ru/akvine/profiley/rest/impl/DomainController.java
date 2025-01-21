@@ -12,7 +12,7 @@ import ru.akvine.profiley.rest.dto.domain.CreateDomainRequest;
 import ru.akvine.profiley.rest.dto.domain.ListDomainRequest;
 import ru.akvine.profiley.rest.dto.domain.UpdateDomainRequest;
 import ru.akvine.profiley.services.DomainService;
-import ru.akvine.profiley.services.domain.Domain;
+import ru.akvine.profiley.services.domain.domain.Domain;
 import ru.akvine.profiley.services.dto.domain.CreateDomain;
 import ru.akvine.profiley.services.dto.domain.ListDomains;
 import ru.akvine.profiley.services.dto.domain.UpdateDomain;

@@ -4,15 +4,16 @@ import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.akvine.profiley.enums.FileExtension;
-import ru.akvine.profiley.exceptions.domain.DomainNotDetectedException;
 import ru.akvine.profiley.exceptions.common.ProfilingProcessException;
+import ru.akvine.profiley.exceptions.domain.DomainNotDetectedException;
 import ru.akvine.profiley.services.DetectByDictionariesService;
 import ru.akvine.profiley.services.DetectByRulesService;
 import ru.akvine.profiley.services.RowProcessorService;
 import ru.akvine.profiley.services.domain.Dictionary;
-import ru.akvine.profiley.services.dto.PossibleDomain;
+import ru.akvine.profiley.services.domain.domain.DetectedDomain;
+import ru.akvine.profiley.services.domain.domain.DetectedTextDomain;
 import ru.akvine.profiley.services.dto.ProfileAction;
-import ru.akvine.profiley.services.dto.TxtPossibleDomain;
+import ru.akvine.profiley.services.dto.rule.RuleInfo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +22,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 @Service
 @Slf4j
@@ -37,10 +37,10 @@ public class TxtProfilerService extends CommonProfilerService {
     }
 
     @Override
-    public List<? extends PossibleDomain> profile(ProfileAction profileAction) {
+    public List<? extends DetectedDomain> profile(ProfileAction profileAction) {
         super.profile(profileAction);
         InputStream file = profileAction.getFile();
-        List<TxtPossibleDomain> detectedDomains = new ArrayList<>();
+        List<DetectedTextDomain> detectedDomains = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file))) {
             String line;
@@ -62,11 +62,13 @@ public class TxtProfilerService extends CommonProfilerService {
                     }
 
                     if (StringUtils.isNotBlank(possibleDomainByWords)) {
-                        detectedDomains.add(new TxtPossibleDomain(possibleDomainByWords, currentLineNumber));
+                        detectedDomains.add((DetectedTextDomain) new DetectedTextDomain()
+                                .setLineNumber(currentLineNumber)
+                                .setDomainName(possibleDomainByWords));
                     }
                 }
 
-                Map<String, Boolean> possibleDomainsByRules = detectByRulesService.detect(line, profileAction.getRules());
+                List<RuleInfo> possibleDomainsByRules = detectByRulesService.detect(line, profileAction.getRules());
                 detectedDomains.addAll(convertToTxtPossibleDomains(possibleDomainsByRules, currentLineNumber));
 
                 currentLineNumber += 1;
@@ -93,10 +95,14 @@ public class TxtProfilerService extends CommonProfilerService {
     }
 
     // TODO : вынести в отдельный класс
-    private List<TxtPossibleDomain> convertToTxtPossibleDomains(Map<String, Boolean> possibleDomainsByRules,
-                                                                int currentLineNumber) {
-        return possibleDomainsByRules.entrySet().stream()
-                .map(pair -> new TxtPossibleDomain(pair.getKey(), currentLineNumber, pair.getValue()))
+    private List<DetectedTextDomain> convertToTxtPossibleDomains(List<RuleInfo> possibleDomainsByRules,
+                                                                 int currentLineNumber) {
+        return possibleDomainsByRules.stream()
+                .map(ruleInfo -> (DetectedTextDomain) new DetectedTextDomain()
+                        .setLineNumber(currentLineNumber)
+                        .setValue(ruleInfo.getValue())
+                        .setCorrect(ruleInfo.isCorrect())
+                        .setDomainName(ruleInfo.getDomainName()))
                 .toList();
     }
 }

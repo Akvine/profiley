@@ -42,7 +42,7 @@ public class DictionaryEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DOMAIN_ID", nullable = false)
     @NotNull
-    private DomainEntity domain;
+    private ru.akvine.profiley.repository.entity.DomainEntity domain;
 
     @Column(name = "CREATED_DATE", nullable = false)
     @NotNull

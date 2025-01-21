@@ -12,7 +12,7 @@ import ru.akvine.profiley.exceptions.user.UserAlreadyExistsException;
 import ru.akvine.profiley.exceptions.user.UserNotFoundException;
 import ru.akvine.profiley.repository.UserRepository;
 import ru.akvine.profiley.repository.entity.UserEntity;
-import ru.akvine.profiley.utils.UUIDGenerator;
+import ru.akvine.profiley.utils.generators.UUIDGenerator;
 
 import java.util.Optional;
 

@@ -13,12 +13,12 @@ import ru.akvine.profiley.repository.entity.DomainEntity;
 import ru.akvine.profiley.services.DictionaryService;
 import ru.akvine.profiley.services.DomainService;
 import ru.akvine.profiley.services.domain.Dictionary;
-import ru.akvine.profiley.services.domain.Domain;
+import ru.akvine.profiley.services.domain.domain.Domain;
 import ru.akvine.profiley.services.dto.dictionary.CreateDictionary;
 import ru.akvine.profiley.services.dto.dictionary.UpdateDictionary;
 import ru.akvine.profiley.services.dto.domain.ListDomains;
 import ru.akvine.profiley.utils.Asserts;
-import ru.akvine.profiley.utils.UUIDGenerator;
+import ru.akvine.profiley.utils.generators.UUIDGenerator;
 
 import java.util.Date;
 import java.util.List;

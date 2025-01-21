@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import ru.akvine.profiley.services.domain.base.Model;
 import ru.akvine.profiley.repository.entity.DictionaryEntity;
+import ru.akvine.profiley.services.domain.domain.Domain;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,10 +1,11 @@
-package ru.akvine.profiley.services.domain;
+package ru.akvine.profiley.services.domain.domain;
 
 import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import ru.akvine.profiley.services.domain.base.Model;
 import ru.akvine.profiley.repository.entity.DomainEntity;
+import ru.akvine.profiley.services.domain.User;
+import ru.akvine.profiley.services.domain.base.Model;
 
 @Data
 @Accessors(chain = true)

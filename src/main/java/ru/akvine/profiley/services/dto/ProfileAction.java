@@ -1,11 +1,10 @@
 package ru.akvine.profiley.services.dto;
 
-import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.services.domain.Dictionary;
 import ru.akvine.profiley.services.domain.Rule;
-import ru.akvine.profiley.enums.FileExtension;
 
 import java.io.InputStream;
 import java.util.Collection;
@@ -17,8 +16,6 @@ public class ProfileAction {
     private Collection<Rule> rules;
     private FileExtension extension;
     private InputStream file;
-    @Nullable
     private String fileName;
-    @Nullable
     private String userEmail;
 }

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.akvine.profiley.components.SecurityManager;
 import ru.akvine.profiley.rest.dto.domain.*;
-import ru.akvine.profiley.services.domain.Domain;
+import ru.akvine.profiley.services.domain.domain.Domain;
 import ru.akvine.profiley.services.dto.domain.CreateDomain;
 import ru.akvine.profiley.services.dto.domain.ListDomains;
 import ru.akvine.profiley.services.dto.domain.UpdateDomain;
