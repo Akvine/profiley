@@ -20,7 +20,7 @@ public class DetectedTextDomain extends DetectedDomain {
         this.domainName = detectedTextDomainEntity.getDomainName();
 
         this.value = detectedTextDomainEntity.getValue();
-        this.lineNumber = getLineNumber();
+        this.lineNumber = detectedTextDomainEntity.getLineNumber();
         this.correct = detectedTextDomainEntity.isCorrect();
 
     }

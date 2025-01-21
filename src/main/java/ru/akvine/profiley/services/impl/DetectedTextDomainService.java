@@ -9,6 +9,7 @@ import ru.akvine.profiley.repository.entity.domain.DetectedTextDomainEntity;
 import ru.akvine.profiley.services.ProcessService;
 import ru.akvine.profiley.services.domain.domain.DetectedDomain;
 import ru.akvine.profiley.services.domain.domain.DetectedTextDomain;
+import ru.akvine.profiley.utils.Asserts;
 
 import java.util.List;
 
@@ -33,6 +34,18 @@ public class DetectedTextDomainService extends AbstractDetectedDomainService<Det
                         .setDomainName(detectedDomain.getDomainName())).toList();
         return detectedTextDomainRepository
                 .saveAll(detectedTextDomainEntities)
+                .stream()
+                .map(DetectedTextDomain::new)
+                .toList();
+    }
+
+    @Override
+    public List<DetectedTextDomain> list(String pid, String userUuid) {
+        Asserts.isNotNull(pid, "pid is null");
+        Asserts.isNotNull(userUuid, "userUuid is null");
+
+        return detectedTextDomainRepository
+                .list(pid, userUuid)
                 .stream()
                 .map(DetectedTextDomain::new)
                 .toList();

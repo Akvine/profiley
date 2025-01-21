@@ -15,6 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import ru.akvine.profiley.constants.ErrorCodes;
+import ru.akvine.profiley.exceptions.common.ReportGenerationException;
 import ru.akvine.profiley.exceptions.common.ValidationException;
 import ru.akvine.profiley.exceptions.dictionary.DictionaryMaxCountException;
 import ru.akvine.profiley.exceptions.dictionary.DictionaryNotFoundException;
@@ -126,6 +127,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponse> handleDictionaryMaxCountException(DictionaryMaxCountException exception) {
         ErrorResponse errorResponse = new ErrorResponse(
                 ErrorCodes.Dictionary.DICTIONARY_MAX_COUNT_ERROR,
+                exception.getMessage(),
+                exception.getMessage()
+        );
+        return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({ReportGenerationException.class})
+    public ResponseEntity<ErrorResponse> handleReportGenerationException(ReportGenerationException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                ErrorCodes.Report.REPORT_GENERATION_ERROR,
                 exception.getMessage(),
                 exception.getMessage()
         );

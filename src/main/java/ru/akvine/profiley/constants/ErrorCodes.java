@@ -34,4 +34,8 @@ public final class ErrorCodes {
         String DICTIONARY_NOT_FOUND_ERROR = "dictionary.notFound.error";
         String DICTIONARY_MAX_COUNT_ERROR = "dictionary.max.count.error";
     }
+
+    public interface Report {
+        String REPORT_GENERATION_ERROR = "report.generation.error";
+    }
 }

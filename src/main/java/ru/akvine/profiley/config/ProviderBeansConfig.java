@@ -8,8 +8,10 @@ import ru.akvine.profiley.enums.ValidatorType;
 import ru.akvine.profiley.providers.DetectedDomainsServicesProvider;
 import ru.akvine.profiley.providers.DomainValidatorsProvider;
 import ru.akvine.profiley.providers.ProfilerServiceProvider;
+import ru.akvine.profiley.providers.ReportGeneratorsProvider;
 import ru.akvine.profiley.services.DetectedDomainService;
 import ru.akvine.profiley.services.ProfilerService;
+import ru.akvine.profiley.services.report.ReportGenerator;
 import ru.akvine.profiley.services.validators.DomainValidator;
 
 import java.util.List;
@@ -40,5 +42,13 @@ public class ProviderBeansConfig {
         Map<FileType, DetectedDomainService<?>> detectedDomainServiceMap = detectedDomainServices.stream()
                 .collect(toMap(DetectedDomainService::getType, identity()));
         return new DetectedDomainsServicesProvider(detectedDomainServiceMap);
+    }
+
+    @Bean
+    public ReportGeneratorsProvider reportGeneratorsProvider(List<ReportGenerator> reportGenerators) {
+        Map<FileExtension, ReportGenerator> reportGeneratorMap = reportGenerators
+                .stream()
+                .collect(toMap(ReportGenerator::getExtension, identity()));
+        return new ReportGeneratorsProvider(reportGeneratorMap);
     }
 }
