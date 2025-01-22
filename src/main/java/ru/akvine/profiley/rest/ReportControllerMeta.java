@@ -10,5 +10,5 @@ import ru.akvine.profiley.rest.dto.report.GenerateReportRequest;
 @RequestMapping(value = "/reports")
 public interface ReportControllerMeta {
     @GetMapping
-    ResponseEntity<byte[]> generate(@RequestBody @Valid GenerateReportRequest request);
+    ResponseEntity<?> generate(@RequestBody @Valid GenerateReportRequest request);
 }

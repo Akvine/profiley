@@ -31,7 +31,7 @@ public class ReportServiceImpl implements ReportService {
         if (state != ProcessState.COMPLETED_SUCCESSFUL) {
             String errorMessage = String.format(
                     "Can't generate report for process (pid = [%s]) with state = [%s] report! Required state : [%s]",
-                    process.getId(), state, ProcessState.COMPLETED_SUCCESSFUL);
+                    process.getPid(), state, ProcessState.COMPLETED_SUCCESSFUL);
             throw new ReportGenerationException(errorMessage);
         }
 
