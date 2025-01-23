@@ -54,8 +54,10 @@ public class UserRuleServiceImpl implements UserRuleService {
     public List<Rule> get(ListRules listRules) {
         Asserts.isNotNull(listRules, "listRules is null");
 
+        String userUuid = listRules.getUserUuid();
+
         List<Rule> rulesBySystemDomains = List.of();
-        List<Rule> userRules = List.of();
+        List<Rule> userRules;
 
         if (listRules.isIncludeSystemDomains()) {
             rulesBySystemDomains = systemRuleService.list();
@@ -63,7 +65,13 @@ public class UserRuleServiceImpl implements UserRuleService {
 
         if (StringUtils.isNotBlank(listRules.getDomainName())) {
             userRules = ruleRepository
-                    .findBy(listRules.getDomainName(), listRules.getUserUuid())
+                    .findBy(listRules.getDomainName(), userUuid)
+                    .stream()
+                    .map(Rule::new)
+                    .toList();
+        } else {
+            userRules = ruleRepository
+                    .findBy(userUuid)
                     .stream()
                     .map(Rule::new)
                     .toList();

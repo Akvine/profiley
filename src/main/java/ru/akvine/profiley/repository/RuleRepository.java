@@ -33,6 +33,12 @@ public interface RuleRepository extends JpaRepository<RuleEntity, Long> {
                             @Param("userUuid") String userUuid);
 
     @Query("from RuleEntity re where " +
+            "re.domain.user.uuid = :userUuid " +
+            "and " +
+            "re.deleted = false and re.domain.user.deleted = false")
+    List<RuleEntity> findBy(@Param("userUuid") String userUuid);
+
+    @Query("from RuleEntity re where " +
             "re.deleted = false " +
             "and " +
             "re.uuid = :uuid " +
