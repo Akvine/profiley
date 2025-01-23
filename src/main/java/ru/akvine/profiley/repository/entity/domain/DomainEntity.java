@@ -25,6 +25,9 @@ public class DomainEntity extends BaseEntity<Long> {
     @Column(name = "NAME", nullable = false)
     private String name;
 
+    @Column(name = "IS_NEEDS_MASKING", nullable = false)
+    private boolean needsMasking;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private UserEntity user;

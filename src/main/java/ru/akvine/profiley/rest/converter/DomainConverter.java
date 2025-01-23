@@ -41,12 +41,14 @@ public class DomainConverter {
         return new UpdateDomain()
                 .setDomainName(request.getDomainName())
                 .setNewDomainName(request.getNewDomainName())
-                .setUserUuid(securityManager.getCurrentUser().getUuid());
+                .setUserUuid(securityManager.getCurrentUser().getUuid())
+                .setNeedsMasking(request.getNeedsMasking());
     }
 
     private DomainDto buildDomainDto(Domain domainToDto) {
         return new DomainDto()
                 .setName(domainToDto.getName())
-                .setSystem(domainToDto.isSystem());
+                .setSystem(domainToDto.isSystem())
+                .setNeedsMasking(domainToDto.isNeedsMasking());
     }
 }

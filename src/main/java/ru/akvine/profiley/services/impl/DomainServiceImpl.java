@@ -2,6 +2,7 @@ package ru.akvine.profiley.services.impl;
 
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.ListUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,11 +36,23 @@ public class DomainServiceImpl implements DomainService {
     //TODO: переписать на Query DSL или Criteria API
     public List<Domain> get(ListDomains list) {
         Asserts.isNotNull(list, "list is null");
-        List<Domain> allUserDomains = domainRepository
-                .findAll(list.getUserUuid())
-                .stream()
-                .map(Domain::new)
-                .toList();
+
+        String userUuid = list.getUserUuid();
+
+        List<Domain> userDomains;
+        if (CollectionUtils.isNotEmpty(list.getDomainNames())) {
+            userDomains = domainRepository
+                    .findByNamesAndUserUuid(list.getDomainNames(), userUuid)
+                    .stream()
+                    .map(Domain::new)
+                    .toList();
+        } else {
+            userDomains = domainRepository
+                    .findAll(userUuid)
+                    .stream()
+                    .map(Domain::new)
+                    .toList();
+        }
 
         List<Domain> systemDomains = List.of();
         if (list.isIncludeSystem()) {
@@ -48,7 +61,7 @@ public class DomainServiceImpl implements DomainService {
                     .toList();
         }
 
-        return ListUtils.union(allUserDomains, systemDomains);
+        return ListUtils.union(userDomains, systemDomains);
     }
 
     @Override
@@ -87,8 +100,13 @@ public class DomainServiceImpl implements DomainService {
 
         if (StringUtils.isNotBlank(newDomain) && !domainToUpdate.getName().equals(newDomain)) {
             domainToUpdate.setName(newDomain);
-            domainToUpdate.setUpdatedDate(new Date());
         }
+
+        if (updateDomain.getNeedsMasking() != null) {
+            domainToUpdate.setNeedsMasking(updateDomain.getNeedsMasking());
+        }
+
+        domainToUpdate.setUpdatedDate(new Date());
 
         return new Domain(domainRepository.save(domainToUpdate));
     }

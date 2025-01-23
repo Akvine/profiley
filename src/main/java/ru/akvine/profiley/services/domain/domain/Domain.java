@@ -11,6 +11,7 @@ import ru.akvine.profiley.services.domain.base.Model;
 @Accessors(chain = true)
 public class Domain extends Model<Long> {
     private String name;
+    private boolean needsMasking;
     @Nullable
     private User user;
 
@@ -18,6 +19,7 @@ public class Domain extends Model<Long> {
         super(domain);
         this.id = domain.getId();
         this.name = domain.getName();
+        this.needsMasking = domain.isNeedsMasking();
         if (domain.getUser() != null) {
             this.user = new User(domain.getUser());
         }

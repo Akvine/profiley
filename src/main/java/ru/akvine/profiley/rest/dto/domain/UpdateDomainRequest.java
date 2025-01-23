@@ -11,4 +11,6 @@ public class UpdateDomainRequest {
     private String domainName;
 
     private String newDomainName;
+
+    private Boolean needsMasking;
 }

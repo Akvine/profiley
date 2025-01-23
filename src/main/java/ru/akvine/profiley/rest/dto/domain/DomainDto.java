@@ -8,4 +8,5 @@ import lombok.experimental.Accessors;
 public class DomainDto {
     private String name;
     private boolean system;
+    private boolean needsMasking;
 }

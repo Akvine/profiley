@@ -11,4 +11,6 @@ public class UpdateDomain {
     private String domainName;
     @Nullable
     private String newDomainName;
+    @Nullable
+    private Boolean needsMasking;
 }

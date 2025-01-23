@@ -11,18 +11,25 @@ import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.enums.FileType;
 import ru.akvine.profiley.exceptions.common.ReportGenerationException;
 import ru.akvine.profiley.providers.DetectedDomainsServicesProvider;
+import ru.akvine.profiley.services.DomainService;
 import ru.akvine.profiley.services.domain.domain.DetectedTextDomain;
+import ru.akvine.profiley.services.domain.domain.Domain;
 import ru.akvine.profiley.services.dto.GenerateReport;
+import ru.akvine.profiley.services.dto.domain.ListDomains;
 import ru.akvine.profiley.utils.Asserts;
 import ru.akvine.profiley.utils.POIUtils;
+import ru.akvine.profiley.utils.StringHelper;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class TxtReportGenerator implements ReportGenerator {
     private final DetectedDomainsServicesProvider detectedDomainsServicesProvider;
+    private final DomainService domainService;
 
     @Override
     public byte[] generate(GenerateReport generateReport) {
@@ -31,9 +38,18 @@ public class TxtReportGenerator implements ReportGenerator {
         String userUuid = generateReport.getUserUuid();
         String pid = generateReport.getPid();
 
-        List<DetectedTextDomain> detectedTextDomainList = (List<DetectedTextDomain>) detectedDomainsServicesProvider
-                .getByType(FileType.from(getExtension()))
-                .list(pid, userUuid);
+        List<DetectedTextDomain> detectedTextDomainList =
+                (List<DetectedTextDomain>) detectedDomainsServicesProvider
+                        .getByType(FileType.from(getExtension()))
+                        .list(pid, userUuid);
+        List<String> domainNames = detectedTextDomainList.stream()
+                .map(DetectedTextDomain::getDomainName)
+                .toList();
+        ListDomains listDomains = new ListDomains()
+                .setDomainNames(domainNames)
+                .setUserUuid(userUuid);
+        Map<String, Domain> domains = domainService.get(listDomains).stream()
+                .collect(Collectors.toMap(Domain::getName, domain -> domain));
 
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet(generateReport.getSheetName());
@@ -46,7 +62,14 @@ public class TxtReportGenerator implements ReportGenerator {
                 domainName.setCellValue(detectedTextDomainList.get(i).getDomainName());
 
                 Cell valueName = row.createCell(1);
-                valueName.setCellValue(detectedTextDomainList.get(i).getValue());
+                String value = detectedTextDomainList.get(i).getValue();
+                Domain domain = domains.get(detectedTextDomainList.get(i).getDomainName());
+                if (domain.isNeedsMasking()) {
+                    int radius = value.length() / 4;
+                    valueName.setCellValue(StringHelper.replaceAroundMiddle(value, radius));
+                } else {
+                    valueName.setCellValue(value);
+                }
 
                 Cell correctName = row.createCell(2);
                 correctName.setCellValue(detectedTextDomainList.get(i).isCorrect() ? "Да" : "Нет");
