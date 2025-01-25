@@ -1,9 +1,9 @@
 package ru.akvine.profiley.services.impl;
 
-import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.akvine.profiley.enums.Language;
 import ru.akvine.profiley.exceptions.user.UserAlreadyExistsException;
 import ru.akvine.profiley.exceptions.user.UserNotFoundException;
 import ru.akvine.profiley.repository.UserRepository;
@@ -34,7 +34,8 @@ public class UserServiceImpl implements UserService {
 
             UserEntity user = new UserEntity()
                     .setEmail(email)
-                    .setHash(hash);
+                    .setHash(hash)
+                    .setLanguage(Language.EN);
             user.setUuid(UUIDGenerator.uuidWithoutDashes());
             return new User(userRepository.save(user));
         }

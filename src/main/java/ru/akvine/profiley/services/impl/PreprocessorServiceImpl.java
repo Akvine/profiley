@@ -1,6 +1,7 @@
 package ru.akvine.profiley.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
@@ -39,9 +40,12 @@ public class PreprocessorServiceImpl implements PreprocessorService {
         if (currentUser.isDisabledSystemDomains() || currentUser.isDisabledSystemRules()) {
             systemRules = List.of();
         } else {
-            systemRules = systemRuleService.list().stream()
-                    .filter(rule -> !currentUser.getDisabledSystemDomainsNames().contains(rule.getDomain().getName()))
-                    .toList();
+            systemRules = systemRuleService.list();
+            if (CollectionUtils.isNotEmpty(currentUser.getDisabledSystemDomainsNames())) {
+                systemRules = systemRules.stream()
+                        .filter(rule -> !currentUser.getDisabledSystemDomainsNames().contains(rule.getDomain().getName()))
+                        .toList();
+            }
         }
 
         dictionaries = dictionaryService.list(userUuid).stream()
