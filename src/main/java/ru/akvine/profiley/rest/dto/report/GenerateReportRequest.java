@@ -11,4 +11,6 @@ public class GenerateReportRequest {
     private String pid;
 
     private String sheetName;
+
+    private String reportName;
 }

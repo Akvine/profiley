@@ -19,6 +19,6 @@ public class ReportController implements ReportControllerMeta {
     public ResponseEntity<?> generate(GenerateReportRequest request) {
         GenerateReport generateReport = reportConverter.convertToGenerateReport(request);
         byte[] report = reportService.generate(generateReport);
-        return reportConverter.convertToResponseEntity(report);
+        return reportConverter.convertToResponseEntity(report, request.getReportName());
     }
 }
