@@ -12,7 +12,13 @@ import java.util.Set;
 @Getter
 public enum FileType {
     TEXT(Set.of(
-            FileExtension.TXT
+            FileExtension.TXT,
+            FileExtension.LOG,
+            FileExtension.JSON,
+            FileExtension.XML,
+            FileExtension.HTML,
+            FileExtension.CSS,
+            FileExtension.JS
     ));
     private final Collection<FileExtension> supportedFileExtensions;
 

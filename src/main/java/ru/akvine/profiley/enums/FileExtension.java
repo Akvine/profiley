@@ -11,7 +11,13 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public enum FileExtension {
-    TXT("txt");
+    TXT("txt"),
+    LOG("log"),
+    JSON("json"),
+    XML("xml"),
+    HTML("html"),
+    CSS("css"),
+    JS("js");
 
     private final String extension;
 
