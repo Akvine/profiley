@@ -39,10 +39,14 @@ public class PreprocessorServiceImpl implements PreprocessorService {
         if (currentUser.isDisabledSystemDomains() || currentUser.isDisabledSystemRules()) {
             systemRules = List.of();
         } else {
-            systemRules = systemRuleService.list();
+            systemRules = systemRuleService.list().stream()
+                    .filter(rule -> !currentUser.getDisabledSystemDomainsNames().contains(rule.getDomain().getName()))
+                    .toList();
         }
 
-        dictionaries = dictionaryService.list(userUuid);
+        dictionaries = dictionaryService.list(userUuid).stream()
+                .filter(dictionary -> !currentUser.getDisabledSystemDomainsNames().contains(dictionary.getDomain().getName()))
+                .toList();
         userRules = userRuleService.get(userUuid);
 
         return new ProfileAction()

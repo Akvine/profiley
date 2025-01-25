@@ -45,6 +45,9 @@ public class UserEntity extends BaseEntity<Long> implements UserDetails {
     @Column(name = "IS_DISABLED_SYSTEM_RULES", nullable = false)
     private boolean disabledSystemRules;
 
+    @Column(name = "DISABLED_SYSTEM_DOMAINS_NAMES")
+    private String disabledSystemDomainsNames;
+
     @Column(name = "LANGUAGE", nullable = false)
     @Enumerated(EnumType.STRING)
     @NotNull

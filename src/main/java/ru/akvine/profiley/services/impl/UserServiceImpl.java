@@ -1,5 +1,6 @@
 package ru.akvine.profiley.services.impl;
 
+import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -63,6 +64,10 @@ public class UserServiceImpl implements UserService {
         if (updateUser.getLanguage() != null &&
                 !userToUpdate.getLanguage().equals(updateUser.getLanguage())) {
             userToUpdate.setLanguage(updateUser.getLanguage());
+        }
+
+        if (updateUser.getDisabledSystemDomainsNames() != null) {
+            userToUpdate.setDisabledSystemDomainsNames(updateUser.getDisabledSystemDomainsNames());
         }
 
         userToUpdate.setUpdatedDate(new Date());

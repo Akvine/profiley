@@ -19,4 +19,6 @@ public class UserSettingsResponse extends SuccessfulResponse {
     private boolean systemRulesDisabled;
 
     private String language;
+
+    private String disabledSystemDomainsNames;
 }

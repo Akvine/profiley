@@ -16,4 +16,5 @@ public class UpdateUser {
     private Boolean disabledSystemRules;
     @Nullable
     private Language language;
+    private String disabledSystemDomainsNames;
 }

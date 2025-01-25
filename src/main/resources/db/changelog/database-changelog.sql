@@ -231,3 +231,9 @@ ADD COLUMN IS_NEEDS_MASKING BOOLEAN NOT NULL DEFAULT FALSE;
 --precondition-sql-check expectedResult:0 select count(*) from information_schema.columns WHERE table_name = 'USER_ENTITY' AND column_name = 'LANGUAGE';
 ALTER TABLE USER_ENTITY
 ADD COLUMN LANGUAGE VARCHAR(64) NOT NULL DEFAULT 'EN';
+
+--changeset akvine:PROFILEY-1-16
+--preconditions onFail:MARK_RAN onError:HALT onUpdateSql:FAIL
+--precondition-sql-check expectedResult:0 select count(*) from information_schema.columns WHERE table_name = 'USER_ENTITY' AND column_name = 'DISABLED_SYSTEM_DOMAINS_NAMES';
+ALTER TABLE USER_ENTITY
+ADD COLUMN DISABLED_SYSTEM_DOMAINS_NAMES VARCHAR(1024);

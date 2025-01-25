@@ -1,5 +1,6 @@
 package ru.akvine.profiley.rest.validator;
 
+import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.akvine.profiley.rest.dto.profile.UpdateUserSettingsRequest;
@@ -13,6 +14,8 @@ public class UserSettingsValidator {
 
     public void verifyUpdateUserSettingsRequest(UpdateUserSettingsRequest request) {
         Asserts.isNotNull(request, "updateUserSettingsRequest is null");
-        languageValidator.validate(request.getLanguage());
+        if (StringUtils.isNotBlank(request.getLanguage())) {
+            languageValidator.validate(request.getLanguage());
+        }
     }
 }
