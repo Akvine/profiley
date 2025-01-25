@@ -9,4 +9,6 @@ public class UpdateUserSettingsRequest {
     private Boolean disabledSystemDomains;
 
     private Boolean disabledSystemRules;
+
+    private String language;
 }

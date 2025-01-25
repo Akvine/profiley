@@ -1,8 +1,10 @@
 package ru.akvine.profiley.rest.converter;
 
+import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.akvine.profiley.components.SecurityManager;
+import ru.akvine.profiley.enums.Language;
 import ru.akvine.profiley.rest.dto.profile.UpdateUserSettingsRequest;
 import ru.akvine.profiley.rest.dto.profile.UserSettingsResponse;
 import ru.akvine.profiley.services.domain.User;
@@ -19,7 +21,8 @@ public class UserSettingsConverter {
                 .setUuid(user.getUuid())
                 .setEmail(user.getEmail())
                 .setSystemDomainsDisabled(user.isDisabledSystemDomains())
-                .setSystemRulesDisabled(user.isDisabledSystemRules());
+                .setSystemRulesDisabled(user.isDisabledSystemRules())
+                .setLanguage(user.getLanguage().toString());
     }
 
     public UpdateUser convertToUpdateUser(UpdateUserSettingsRequest request) {
@@ -27,6 +30,7 @@ public class UserSettingsConverter {
         return new UpdateUser()
                 .setUserUuid(securityManager.getCurrentUser().getUuid())
                 .setDisabledSystemDomains(request.getDisabledSystemDomains())
-                .setDisabledSystemRules(request.getDisabledSystemRules());
+                .setDisabledSystemRules(request.getDisabledSystemRules())
+                .setLanguage(StringUtils.isBlank(request.getLanguage()) ? null : Language.from(request.getLanguage()));
     }
 }

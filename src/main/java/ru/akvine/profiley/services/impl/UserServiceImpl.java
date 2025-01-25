@@ -13,6 +13,8 @@ import ru.akvine.profiley.services.dto.user.UpdateUser;
 import ru.akvine.profiley.utils.Asserts;
 import ru.akvine.profiley.utils.generators.UUIDGenerator;
 
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -58,6 +60,12 @@ public class UserServiceImpl implements UserService {
             userToUpdate.setDisabledSystemRules(updateUser.getDisabledSystemRules());
         }
 
+        if (updateUser.getLanguage() != null &&
+                !userToUpdate.getLanguage().equals(updateUser.getLanguage())) {
+            userToUpdate.setLanguage(updateUser.getLanguage());
+        }
+
+        userToUpdate.setUpdatedDate(new Date());
         return new User(userRepository.save(userToUpdate));
     }
 

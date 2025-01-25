@@ -19,6 +19,7 @@ public final class ErrorCodes {
         String DICTIONARY_WORDS_COUNT_ERROR = "dictionary.words.count.error";
         String FILE_EXTENSION_NOT_SUPPORTED = "file.extension.not.supported.error";
         String FILE_TYPE_NOT_VALID_ERROR = "file.type.not.valid.error";
+        String LANGUAGE_NOT_SUPPORTED_ERROR = "language.notSupported.error";
     }
 
     public interface User {

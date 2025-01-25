@@ -225,3 +225,9 @@ CREATE INDEX DETECTED_TEXT_DOMAIN_DOMAIN_NAME_INDX ON DETECTED_TEXT_DOMAIN_ENTIT
 --precondition-sql-check expectedResult:0 select count(*) from information_schema.columns WHERE table_name = 'DOMAIN_ENTITY' AND column_name = 'IS_NEEDS_MASKING';
 ALTER TABLE DOMAIN_ENTITY
 ADD COLUMN IS_NEEDS_MASKING BOOLEAN NOT NULL DEFAULT FALSE;
+
+--changeset akvine:PROFILEY-1-15
+--preconditions onFail:MARK_RAN onError:HALT onUpdateSql:FAIL
+--precondition-sql-check expectedResult:0 select count(*) from information_schema.columns WHERE table_name = 'USER_ENTITY' AND column_name = 'LANGUAGE';
+ALTER TABLE USER_ENTITY
+ADD COLUMN LANGUAGE VARCHAR(64) NOT NULL DEFAULT 'EN';

@@ -8,6 +8,7 @@ import ru.akvine.profiley.rest.UserSettingsControllerMeta;
 import ru.akvine.profiley.rest.converter.UserSettingsConverter;
 import ru.akvine.profiley.rest.dto.common.Response;
 import ru.akvine.profiley.rest.dto.profile.UpdateUserSettingsRequest;
+import ru.akvine.profiley.rest.validator.UserSettingsValidator;
 import ru.akvine.profiley.services.UserService;
 import ru.akvine.profiley.services.domain.User;
 import ru.akvine.profiley.services.dto.user.UpdateUser;
@@ -18,6 +19,7 @@ public class UserSettingsController implements UserSettingsControllerMeta {
     private final SecurityManager securityManager;
     private final UserService userService;
     private final UserSettingsConverter userSettingsConverter;
+    private final UserSettingsValidator userSettingsValidator;
 
     @Override
     public Response list() {
@@ -28,6 +30,7 @@ public class UserSettingsController implements UserSettingsControllerMeta {
 
     @Override
     public Response update(@RequestBody UpdateUserSettingsRequest request) {
+        userSettingsValidator.verifyUpdateUserSettingsRequest(request);
         UpdateUser updateUser = userSettingsConverter.convertToUpdateUser(request);
         User updatedUser = userService.update(updateUser);
         return userSettingsConverter.convertToUserSettingsResponse(updatedUser);
