@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.lang.Nullable;
+import ru.akvine.profiley.repository.entity.domain.DomainEntity;
 
 import java.util.Date;
 
@@ -42,7 +43,7 @@ public class DictionaryEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DOMAIN_ID", nullable = false)
     @NotNull
-    private ru.akvine.profiley.repository.entity.DomainEntity domain;
+    private DomainEntity domain;
 
     @Column(name = "CREATED_DATE", nullable = false)
     @NotNull

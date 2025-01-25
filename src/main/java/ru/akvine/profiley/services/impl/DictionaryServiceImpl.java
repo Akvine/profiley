@@ -9,7 +9,7 @@ import ru.akvine.profiley.exceptions.dictionary.DictionaryMaxCountException;
 import ru.akvine.profiley.exceptions.dictionary.DictionaryNotFoundException;
 import ru.akvine.profiley.repository.DictionaryRepository;
 import ru.akvine.profiley.repository.entity.DictionaryEntity;
-import ru.akvine.profiley.repository.entity.DomainEntity;
+import ru.akvine.profiley.repository.entity.domain.DomainEntity;
 import ru.akvine.profiley.services.DictionaryService;
 import ru.akvine.profiley.services.DomainService;
 import ru.akvine.profiley.services.domain.Dictionary;

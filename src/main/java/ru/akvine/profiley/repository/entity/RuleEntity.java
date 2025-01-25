@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import ru.akvine.profiley.enums.ValidatorType;
+import ru.akvine.profiley.repository.entity.domain.DomainEntity;
 
 @Accessors(chain = true)
 @Entity
@@ -29,7 +30,7 @@ public class  RuleEntity extends BaseEntity<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DOMAIN_ID", nullable = false)
     @NotNull
-    private ru.akvine.profiley.repository.entity.DomainEntity domain;
+    private DomainEntity domain;
 
     @Column(name = "ALIAS")
     @Nullable

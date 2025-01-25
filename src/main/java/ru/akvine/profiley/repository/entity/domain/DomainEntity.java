@@ -1,4 +1,4 @@
-package ru.akvine.profiley.repository.entity;
+package ru.akvine.profiley.repository.entity.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import ru.akvine.profiley.repository.entity.BaseEntity;
+import ru.akvine.profiley.repository.entity.UserEntity;
 
 @Accessors(chain = true)
 @Entity

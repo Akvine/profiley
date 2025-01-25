@@ -1,7 +1,7 @@
 package ru.akvine.profiley.services;
 
 import org.springframework.transaction.annotation.Transactional;
-import ru.akvine.profiley.repository.entity.DomainEntity;
+import ru.akvine.profiley.repository.entity.domain.DomainEntity;
 import ru.akvine.profiley.services.domain.domain.Domain;
 import ru.akvine.profiley.services.dto.domain.CreateDomain;
 import ru.akvine.profiley.services.dto.domain.ListDomains;
