@@ -17,6 +17,7 @@ public interface DomainService {
     @Transactional
     Domain update(UpdateDomain updateDomain);
 
+    @Transactional
     void delete(String domainName, String userUuid);
 
     DomainEntity verifyExistsByNameAndUserUuid(String name, String userUuid);

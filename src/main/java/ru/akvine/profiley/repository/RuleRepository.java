@@ -1,8 +1,10 @@
 package ru.akvine.profiley.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import ru.akvine.profiley.repository.entity.RuleEntity;
 
 import java.util.Collection;
@@ -46,4 +48,9 @@ public interface RuleRepository extends JpaRepository<RuleEntity, Long> {
             "re.domain.user.uuid = :userUuid")
     Optional<RuleEntity> findByUuid(@Param("uuid") String uuid,
                                     @Param("userUuid") String userUuid);
+
+    @Query("delete from RuleEntity re " +
+            "where re.domain.name = :name")
+    @Modifying
+    int delete(@Param("name") String domainName);
 }

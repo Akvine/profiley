@@ -2,6 +2,7 @@ package ru.akvine.profiley.services.impl;
 
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.ListUtils;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.akvine.profiley.exceptions.domain.DomainAlreadyExistsException;
 import ru.akvine.profiley.exceptions.domain.DomainNotFoundException;
 import ru.akvine.profiley.repository.DomainRepository;
+import ru.akvine.profiley.repository.RuleRepository;
 import ru.akvine.profiley.repository.entity.UserEntity;
 import ru.akvine.profiley.repository.entity.domain.DomainEntity;
 import ru.akvine.profiley.services.DomainService;
@@ -24,10 +26,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DomainServiceImpl implements DomainService {
     private final static String DEFAULT_UUID_STUB = "DEFAULT_UUID_STUB";
 
     private final DomainRepository domainRepository;
+    private final RuleRepository ruleRepository;
 
     private final UserService userService;
 
@@ -121,6 +125,9 @@ public class DomainServiceImpl implements DomainService {
         domain.setDeletedDate(new Date());
 
         domainRepository.save(domain);
+        int deletedRulesCount = ruleRepository.delete(domainName);
+
+        logger.info("Successful delete fomain with name = {} and related rules count = {}", domain, deletedRulesCount);
     }
 
     @Override
