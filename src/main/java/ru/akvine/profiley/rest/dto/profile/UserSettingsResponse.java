@@ -2,10 +2,12 @@ package ru.akvine.profiley.rest.dto.profile;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import ru.akvine.profiley.rest.dto.common.SuccessfulResponse;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public class UserSettingsResponse extends SuccessfulResponse {
     @NotBlank

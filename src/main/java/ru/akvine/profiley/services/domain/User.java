@@ -2,6 +2,7 @@ package ru.akvine.profiley.services.domain;
 
 import io.micrometer.common.util.StringUtils;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import ru.akvine.profiley.enums.Language;
@@ -12,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @NoArgsConstructor
 public class User extends Model<Long> {

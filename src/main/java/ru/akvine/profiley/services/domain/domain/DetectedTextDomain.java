@@ -1,10 +1,12 @@
 package ru.akvine.profiley.services.domain.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import ru.akvine.profiley.repository.entity.domain.DetectedTextDomainEntity;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor

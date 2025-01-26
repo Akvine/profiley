@@ -2,6 +2,7 @@ package ru.akvine.profiley.services.domain;
 
 import jakarta.annotation.Nullable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import ru.akvine.profiley.enums.ValidatorType;
 import ru.akvine.profiley.services.domain.base.Model;
@@ -11,6 +12,7 @@ import ru.akvine.profiley.services.domain.domain.Domain;
 import java.util.regex.Pattern;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public class Rule extends Model<Long> {
     @Nullable

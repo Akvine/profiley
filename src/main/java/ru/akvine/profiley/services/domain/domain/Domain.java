@@ -2,12 +2,14 @@ package ru.akvine.profiley.services.domain.domain;
 
 import jakarta.annotation.Nullable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import ru.akvine.profiley.repository.entity.domain.DomainEntity;
 import ru.akvine.profiley.services.domain.User;
 import ru.akvine.profiley.services.domain.base.Model;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public class Domain extends Model<Long> {
     private String name;
