@@ -17,6 +17,7 @@ import ru.akvine.profiley.services.dto.ProfileFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.List;
 
 import static java.util.Collections.EMPTY_LIST;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,7 +49,7 @@ public class PreprocessorServiceImplTest {
                 "original_file." + FileExtension.TXT.getExtension(),
                 "application/txt",
                 randomValues);
-        ProfileFile profileFile = new ProfileFile(userUuid, mockFile);
+        ProfileFile profileFile = new ProfileFile(userUuid, mockFile, List.of());
 
         Mockito.when(userRuleService.get(userUuid)).thenReturn(EMPTY_LIST);
         Mockito.when(userService.get(userUuid)).thenReturn(new User());
