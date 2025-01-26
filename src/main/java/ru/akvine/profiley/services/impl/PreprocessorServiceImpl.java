@@ -46,6 +46,11 @@ public class PreprocessorServiceImpl implements PreprocessorService {
                         .filter(rule -> !currentUser.getDisabledSystemDomainsNames().contains(rule.getDomain().getName()))
                         .toList();
             }
+            if (CollectionUtils.isNotEmpty(profileFile.getExcludedSystemDomainsNames())) {
+                systemRules = systemRules.stream()
+                        .filter(rule -> !profileFile.getExcludedSystemDomainsNames().contains(rule.getDomain().getName()))
+                        .toList();
+            }
         }
 
         dictionaries = dictionaryService.list(userUuid).stream()
