@@ -46,7 +46,7 @@ public class ProfilerFacadeImpl implements ProfilerFacade {
         try {
             List<? extends DetectedDomain> detectedDomains = profilerServiceProvider
                     .profilerServices()
-                    .get(profileAction.getExtension())
+                    .get(FileType.from(profileAction.getExtension()))
                     .profile(profileAction);
 
             Date completedDate = new Date();

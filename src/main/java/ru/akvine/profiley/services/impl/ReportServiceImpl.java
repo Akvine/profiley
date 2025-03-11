@@ -3,6 +3,7 @@ package ru.akvine.profiley.services.impl;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.akvine.profiley.enums.FileType;
 import ru.akvine.profiley.enums.ProcessState;
 import ru.akvine.profiley.exceptions.common.ReportGenerationException;
 import ru.akvine.profiley.providers.ReportGeneratorsProvider;
@@ -42,6 +43,8 @@ public class ReportServiceImpl implements ReportService {
                     DateTimeUtils.formatLocalDateTime(DateTimeUtils.toLocalDateTime(process.getStartedDate()), formatter));
         }
 
-        return reportGeneratorsProvider.getBy(process.getFileExtension()).generate(generateReport);
+        return reportGeneratorsProvider
+                .getBy(FileType.from(process.getFileExtension()))
+                .generate(generateReport);
     }
 }

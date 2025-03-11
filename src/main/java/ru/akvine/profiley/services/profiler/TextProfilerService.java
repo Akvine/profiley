@@ -3,7 +3,7 @@ package ru.akvine.profiley.services.profiler;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.akvine.profiley.enums.FileExtension;
+import ru.akvine.profiley.enums.FileType;
 import ru.akvine.profiley.exceptions.common.ProfilingProcessException;
 import ru.akvine.profiley.exceptions.domain.DomainNotDetectedException;
 import ru.akvine.profiley.services.DetectByDictionariesService;
@@ -25,12 +25,12 @@ import java.util.Locale;
 
 @Service
 @Slf4j
-public class TxtProfilerService extends CommonProfilerService {
+public class TextProfilerService extends CommonProfilerService {
     private final RowProcessorService rowProcessorService;
 
-    public TxtProfilerService(DetectByDictionariesService detectByDictionariesService,
-                              DetectByRulesService detectByRulesService,
-                              RowProcessorService rowProcessorService) {
+    public TextProfilerService(DetectByDictionariesService detectByDictionariesService,
+                               DetectByRulesService detectByRulesService,
+                               RowProcessorService rowProcessorService) {
         super(detectByDictionariesService, detectByRulesService);
         this.rowProcessorService = rowProcessorService;
 
@@ -90,8 +90,8 @@ public class TxtProfilerService extends CommonProfilerService {
     }
 
     @Override
-    public FileExtension getType() {
-        return FileExtension.TXT;
+    public FileType getType() {
+        return FileType.TEXT;
     }
 
     // TODO : вынести в отдельный класс

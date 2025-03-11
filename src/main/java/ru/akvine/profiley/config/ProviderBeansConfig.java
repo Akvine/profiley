@@ -2,7 +2,6 @@ package ru.akvine.profiley.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.enums.FileType;
 import ru.akvine.profiley.enums.ValidatorType;
 import ru.akvine.profiley.providers.DetectedDomainsServicesProvider;
@@ -24,7 +23,7 @@ import static java.util.stream.Collectors.toMap;
 public class ProviderBeansConfig {
     @Bean
     public ProfilerServiceProvider profilerServiceProvider(List<ProfilerService> profilerServices) {
-        Map<FileExtension, ProfilerService> profilers = profilerServices
+        Map<FileType, ProfilerService> profilers = profilerServices
                 .stream()
                 .collect(toMap(ProfilerService::getType, identity()));
         return new ProfilerServiceProvider(profilers);
@@ -46,9 +45,9 @@ public class ProviderBeansConfig {
 
     @Bean
     public ReportGeneratorsProvider reportGeneratorsProvider(List<ReportGenerator> reportGenerators) {
-        Map<FileExtension, ReportGenerator> reportGeneratorMap = reportGenerators
+        Map<FileType, ReportGenerator> reportGeneratorMap = reportGenerators
                 .stream()
-                .collect(toMap(ReportGenerator::getExtension, identity()));
+                .collect(toMap(ReportGenerator::getType, identity()));
         return new ReportGeneratorsProvider(reportGeneratorMap);
     }
 }

@@ -7,7 +7,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
-import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.enums.FileType;
 import ru.akvine.profiley.enums.Language;
 import ru.akvine.profiley.exceptions.common.ReportGenerationException;
@@ -32,7 +31,7 @@ import static ru.akvine.profiley.constants.MessageResolverCodes.Report.*;
 
 @Service
 @RequiredArgsConstructor
-public class TxtReportGenerator implements ReportGenerator {
+public class TextReportGenerator implements ReportGenerator {
     private final DetectedDomainsServicesProvider detectedDomainsServicesProvider;
     private final DomainService domainService;
     private final MessageResolverService messageResolverService;
@@ -48,7 +47,7 @@ public class TxtReportGenerator implements ReportGenerator {
         Language userLanguage = userService.get(userUuid).getLanguage();
         List<DetectedTextDomain> detectedTextDomainList =
                 (List<DetectedTextDomain>) detectedDomainsServicesProvider
-                        .getByType(FileType.from(getExtension()))
+                        .getByType(getType())
                         .list(pid, userUuid);
         List<String> domainNames = detectedTextDomainList.stream()
                 .map(DetectedTextDomain::getDomainName)
@@ -113,7 +112,7 @@ public class TxtReportGenerator implements ReportGenerator {
     }
 
     @Override
-    public FileExtension getExtension() {
-        return FileExtension.TXT;
+    public FileType getType() {
+        return FileType.TEXT;
     }
 }
