@@ -1,7 +1,10 @@
 package ru.akvine.profiley.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 import ru.akvine.profiley.enums.FileType;
 import ru.akvine.profiley.enums.ProcessState;
 import ru.akvine.profiley.exceptions.common.ProfilingProcessException;
@@ -24,11 +27,15 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ProfilerFacadeImpl implements ProfilerFacade {
     private final PreprocessorService preprocessorService;
     private final ProfilerServiceProvider profilerServiceProvider;
     private final ProcessFacade processFacade;
     private final DetectedDomainsServicesProvider detectedDomainsServicesProvider;
+
+    @Value("${profiling.process.performance.measurement.enabled}")
+    private boolean profilingProcessMeasurementEnabled;
 
     @Override
     public DetectedDomainsStatistic profile(ProfileFile profileFile) {
@@ -43,11 +50,23 @@ public class ProfilerFacadeImpl implements ProfilerFacade {
         String userUuid = createdProcess.getOwner().getUuid();
         Process startedProcess = processFacade.start(createdProcess.getPid(), createdProcess.getOwner().getUuid());
 
+        StopWatch timer = null;
         try {
+            if (profilingProcessMeasurementEnabled) {
+                timer = new StopWatch();
+                timer.start();
+            }
+
             List<? extends DetectedDomain> detectedDomains = profilerServiceProvider
                     .profilerServices()
                     .get(FileType.from(profileAction.getExtension()))
                     .profile(profileAction);
+
+            if (profilingProcessMeasurementEnabled) {
+                timer.stop();
+                logger.info("Profiling process with PID = [{}] benchmark measurement: {} seconds",
+                        pid, timer.getTotalTimeSeconds());
+            }
 
             Date completedDate = new Date();
             UpdateProcess updateProcess = new UpdateProcess()
@@ -73,6 +92,10 @@ public class ProfilerFacadeImpl implements ProfilerFacade {
                     .setErrorMessage(exception.getMessage());
             processFacade.update(updateProcess);
             throw new ProfilingProcessException("Error while profiling: " + exception.getMessage());
+        } finally {
+            if (profilingProcessMeasurementEnabled && timer.isRunning()) {
+                timer.stop();
+            }
         }
     }
 }
