@@ -7,6 +7,8 @@ import ru.akvine.profiley.constants.ErrorCodes;
 import ru.akvine.profiley.enums.FileExtension;
 import ru.akvine.profiley.enums.FileType;
 import ru.akvine.profiley.exceptions.common.ValidationException;
+import ru.akvine.profiley.exceptions.file.FileExtensionNotSupportedException;
+import ru.akvine.profiley.exceptions.file.FileTypeNotSupportedException;
 import ru.akvine.profiley.utils.Asserts;
 
 @Component
@@ -16,7 +18,17 @@ public class FileTypeValidator {
         Asserts.isNotNull(expectedType, "expectedType is null");
 
         String rowExtension = FilenameUtils.getExtension(file.getOriginalFilename());
-        FileExtension fileExtension = FileExtension.from(rowExtension);
+
+        FileExtension fileExtension;
+        try {
+            fileExtension = FileExtension.from(rowExtension);
+        } catch (FileExtensionNotSupportedException exception) {
+            throw new ValidationException(
+                    ErrorCodes.Validation.FILE_EXTENSION_NOT_SUPPORTED,
+                    exception.getMessage()
+            );
+        }
+
         FileType fileType = FileType.from(fileExtension);
 
         if (fileType != expectedType) {
