@@ -1,5 +1,6 @@
 package ru.akvine.profiley.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,5 +23,5 @@ public interface ProcessRepository extends JpaRepository<ProcessEntity, Long> {
             "pe.user.uuid = :userUuid " +
             "and " +
             "pe.deleted = false")
-    List<ProcessEntity> findAll(@Param("userUuid") String userUuid);
+    List<ProcessEntity> findAll(@Param("userUuid") String userUuid, Pageable pageable);
 }

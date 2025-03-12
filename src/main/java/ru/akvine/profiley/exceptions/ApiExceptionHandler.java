@@ -20,6 +20,7 @@ import ru.akvine.profiley.exceptions.common.ValidationException;
 import ru.akvine.profiley.exceptions.dictionary.DictionaryMaxCountException;
 import ru.akvine.profiley.exceptions.dictionary.DictionaryNotFoundException;
 import ru.akvine.profiley.exceptions.domain.DomainAlreadyExistsException;
+import ru.akvine.profiley.exceptions.process.ProcessNotFoundException;
 import ru.akvine.profiley.exceptions.user.UserNotFoundException;
 import ru.akvine.profiley.rest.dto.common.ErrorResponse;
 
@@ -137,6 +138,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponse> handleReportGenerationException(ReportGenerationException exception) {
         ErrorResponse errorResponse = new ErrorResponse(
                 ErrorCodes.Report.REPORT_GENERATION_ERROR,
+                exception.getMessage(),
+                exception.getMessage()
+        );
+        return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({ProcessNotFoundException.class})
+    public ResponseEntity<ErrorResponse> handleProcessNotFoundException(ProcessNotFoundException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                ErrorCodes.Process.PROCESS_NOT_FOUND_ERROR,
                 exception.getMessage(),
                 exception.getMessage()
         );

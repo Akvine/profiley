@@ -2,7 +2,10 @@ package ru.akvine.profiley.services.impl;
 
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.akvine.profiley.enums.ProcessState;
 import ru.akvine.profiley.exceptions.common.PIDGenerationException;
@@ -14,6 +17,7 @@ import ru.akvine.profiley.services.ProcessService;
 import ru.akvine.profiley.services.UserService;
 import ru.akvine.profiley.services.domain.Process;
 import ru.akvine.profiley.services.dto.process.CreateProcess;
+import ru.akvine.profiley.services.dto.process.ListProcess;
 import ru.akvine.profiley.services.dto.process.UpdateProcess;
 import ru.akvine.profiley.utils.Asserts;
 import ru.akvine.profiley.utils.generators.PIDGenerator;
@@ -35,13 +39,40 @@ public class ProcessServiceImpl implements ProcessService {
     private int pidLength;
 
     @Override
-    public List<Process> list(String userUuid) {
+    public Process get(String userUuid, String pid) {
         Asserts.isNotNull(userUuid, "userUuid is null");
-        return processRepository
-                .findAll(userUuid)
+        Asserts.isNotNull(pid, "pid is null");
+        return new Process(verifyExists(pid, userUuid));
+    }
+
+    @Override
+    public List<Process> list(ListProcess listProcess) {
+        Asserts.isNotNull(listProcess, "listProcess is null");
+
+        String userUuid = listProcess.getUserUuid();
+        List<String> pids = listProcess.getPids();
+        ProcessState state = listProcess.getState();
+
+        Pageable pageable = PageRequest.of(listProcess.getPage(), listProcess.getSize());
+
+        List<Process> processes = processRepository
+                .findAll(userUuid, pageable)
                 .stream()
                 .map(Process::new)
                 .toList();
+
+        if (state != null) {
+            processes = processes.stream()
+                    .filter(process -> process.getProcessState() == state)
+                    .toList();
+        }
+
+        if (CollectionUtils.isNotEmpty(pids)) {
+            return processes.stream()
+                    .filter(process -> pids.contains(process.getPid()))
+                    .toList();
+        }
+        return processes;
     }
 
     @Override

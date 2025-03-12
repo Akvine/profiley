@@ -17,4 +17,5 @@ public class ProcessDto {
     private LocalDateTime completedDate;
     private String fileName;
     private FileExtension fileExtension;
+    private String errorMessage;
 }

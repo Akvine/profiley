@@ -39,4 +39,8 @@ public final class ErrorCodes {
     public interface Report {
         String REPORT_GENERATION_ERROR = "report.generation.error";
     }
+
+    public interface Process {
+        String PROCESS_NOT_FOUND_ERROR = "process.notFound.error";
+    }
 }
